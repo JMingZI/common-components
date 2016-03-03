@@ -1,2 +1,2 @@
 # shinemoCommon
-公用文件
+SHINEMO科技自定义前端公用文件
