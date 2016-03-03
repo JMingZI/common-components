@@ -43,6 +43,8 @@
       }
       // set title
       if (options.title) this.elements.title.text(options.title);
+      else this.elements.title.text(this.defaultSetting.title);
+      
       return $.extend({}, this.defaultSetting, options);
     }
   }
