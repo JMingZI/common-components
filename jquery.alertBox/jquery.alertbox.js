@@ -34,6 +34,10 @@
   // ========================
 
   AlertBox.prototype._init = function (options) {
+    // set title
+    if (options.title) this.elements.title.text(options.title);
+    else this.elements.title.text(this.defaultSetting.title);
+      
     if (typeof options == "string"){ this.defaultSetting.msg = options;return this.defaultSetting; }
     else if (typeof options == "object") { 
       // mask bg color
@@ -41,10 +45,6 @@
       else if (options.maskcolor && typeof options.maskcolor == "string") {
         this.MASK.css("background-color", options.maskcolor);
       }
-      // set title
-      if (options.title) this.elements.title.text(options.title);
-      else this.elements.title.text(this.defaultSetting.title);
-      
       return $.extend({}, this.defaultSetting, options);
     }
   }
