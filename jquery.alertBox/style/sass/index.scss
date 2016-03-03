@@ -29,8 +29,11 @@ div{
     background-color: #eceeee;
     color: #333;
     padding: 10px 0;
-    text-indent: 1.5em;
+    // text-indent: 1.5em;
+    font-size: 0;
     .title{
+      font-size: 16px;
+      margin-left: 15px;
       display:inline
     }
     .close{
@@ -40,7 +43,6 @@ div{
       color: #999;
       cursor: pointer;
       margin-right: 15px;
-      text-indent: 0;
       @include transition(transform .5s);
       &:hover{
         color: #333;
