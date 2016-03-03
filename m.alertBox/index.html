@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>移动端自定义弹窗（PC-or-mobile）</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="styles/stylesheets/alertbox.css">
+  <style>
+  a{
+    -webkit-highlight-tap: rgba(0,0,0,0);
+    font-size: .4rem;
+    text-decoration: none;
+  }
+  </style>
+</head>
+<body>
+  <a href="javascript:;" id="btn1">普通弹窗</a>
+  <a href="javascript:;" id="btn2">警告弹窗</a>
+  <a href="javascript:;" id="btn3">输入文本弹窗</a>
+  <script src="alertBox.js"></script>
+  <script>
+    var fontsize = document.body.clientWidth / 10;
+    document.documentElement.style.fontSize = fontsize + "px"; 
+
+    var AlertBox = new AlertBox({a: 1, debug: false});
+
+    document.getElementById('btn1').onclick = function () {
+      AlertBox.alerts("222"); 
+    }
+
+    document.getElementById('btn2').onclick = function () {
+      AlertBox.confirms("警告弹窗", function () {
+        AlertBox.alerts("我是确定"); 
+      }); 
+    }
+
+    document.getElementById('btn3').onclick = function () {
+      AlertBox.prompts("请输入文本内容", function () {
+        AlertBox.alerts("我是回调"); 
+      }); 
+    }
+  </script>
+</body>
+</html>
