@@ -26,7 +26,8 @@
     msg            : "",
     maskcolor      : true,
     callback       : null,
-    closeWarning   : false
+    closeWarning   : false,
+    title          : "提示"    
   };
 
   // INIT SETTINGS AND STYLES
@@ -40,6 +41,8 @@
       else if (options.maskcolor && typeof options.maskcolor == "string") {
         this.MASK.css("background-color", options.maskcolor);
       }
+      // set title
+      if (options.title) this.elements.title.text(options.title);
       return $.extend({}, this.defaultSetting, options);
     }
   }
