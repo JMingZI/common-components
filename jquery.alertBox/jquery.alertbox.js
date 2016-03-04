@@ -20,14 +20,15 @@
   };
 
   AlertBox.prototype.defaultSetting = {
-    type           : "ALERT", // type ALERT or MODAL
-    modalWidth     : '',
-    modalBodyHeight: '',
-    msg            : "",
-    maskcolor      : true,
-    callback       : null,
-    closeWarning   : false,
-    title          : "提示"    
+    type              : "ALERT", // type ALERT or MODAL
+    modalMinWidth     : '',
+    modalHeight       : '',
+    modalBodyMinHeight: '',
+    msg               : "",
+    maskcolor         : true,
+    callback          : null,
+    closeWarning      : false,
+    title             : "提示"    
   };
 
   // INIT SETTINGS AND STYLES
@@ -57,7 +58,11 @@
     if (this.options.modalMinWidth) {
       this.elements.modal.css("min-width", this.options.modalMinWidth);
     }
-    if (this.options.modalBodyMinHeight) {
+    // if set modalHeight , will not use modalBodyMinHeight
+    if (this.options.modalHeight) {
+      this.elements.modal.css("Height", this.options.modalHeight);
+    }
+    else if (this.options.modalBodyMinHeight) {
       this.elements.body.css("min-height", this.options.modalBodyMinHeight);
     }
     // modal center position
