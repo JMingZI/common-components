@@ -22,7 +22,7 @@ $('.mask').alertBox({
   // 弹框最小宽度，默认是400px
   modalMinWidth : "",  
   
-  // 弹框body的最小高度
+  // 弹框body的最小高度，默认是100px
   modalBodyMinHeight: "", 
   
   // 弹框高度 ，设置后，弹框body的最小高度失效
