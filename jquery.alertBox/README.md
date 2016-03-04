@@ -1,5 +1,5 @@
 # jquery.alertBox
-PC端同一弹层
+PC端公用弹层
 
 1、初始化及参数：
 ```js
