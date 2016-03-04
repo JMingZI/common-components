@@ -60,7 +60,11 @@
     }
     // if set modalHeight , will not use modalBodyMinHeight
     if (this.options.modalHeight) {
-      this.elements.modal.css("Height", this.options.modalHeight);
+        this.elements.modal.css("height", this.options.modalHeight);
+        this.elements.body.css("height", 
+        parseInt(this.options.modalHeight) - 
+        this.elements.head.outerHeight() - 
+        this.elements.foot.height() - 20 + "px");
     }
     else if (this.options.modalBodyMinHeight) {
       this.elements.body.css("min-height", this.options.modalBodyMinHeight);
@@ -74,6 +78,8 @@
   AlertBox.prototype._getEl = function() {
     var el = {
       modal  :       this.MASK.find('.modal'),
+      head   :       this.MASK.find('.head'),
+      foot   :       this.MASK.find('.foot'),
       title  :       this.MASK.find('.title'),
       body   :       this.MASK.find('.body'),
       confirm:       this.MASK.find('.modal-confirm')

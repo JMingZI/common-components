@@ -137,6 +137,7 @@ div {
 .modal .body {
   min-height: 100px;
   padding: 10px;
+  overflow-y: auto;
 }
 /* line 57, ../sass/index.scss */
 .modal .foot {
