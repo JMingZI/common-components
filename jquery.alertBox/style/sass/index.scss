@@ -38,14 +38,17 @@ div{
     }
     .close{
       float: right;
-      font-size: 20px;
-      font-weight: 200;
-      color: #999;
+      // font-size: 20px;
+      // font-weight: 200;
+      // color: #999;
+      width: 13px;
+      height: 13px;
       cursor: pointer;
-      margin-right: 15px;
+      margin-right: 20px;
+      background: url(../images/x.png) center; 
       @include transition(transform .5s);
       &:hover{
-        color: #333;
+        // color: #333;
         @include transform(rotate(360deg));
       }
     }
