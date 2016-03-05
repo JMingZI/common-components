@@ -1,6 +1,32 @@
 # jquery.alertBox
 PC端公用弹层
 
+#### 使用介绍
+
+1、引入
+  ```html
+  <script type="text/javascript" src="../scripts/jquery.alertbox.js"></script>  
+  <link rel="stylesheet" href="../styles/stylesheets/alertBox.css">
+  ```
+
+2、引入DOM结构
+```html
+<!-- modal -->
+<div class="mask">
+  <div class="modal">
+    <div class="head">
+      <h4 class="title"></h4>
+      <span class="close">&times;</span>
+    </div>
+    <div class="body"></div>
+    <div class="foot">
+      <a href="javascript:;" class="modal-btns modal-close">关闭</a>
+      <a href="javascript:;" class="modal-btns modal-confirm">确定</a>
+    </div>  
+  </div>
+</div>
+```
+
 1、初始化及参数：
 ```js
 $('.mask').alertBox({
