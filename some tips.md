@@ -1,4 +1,4 @@
-移动端表情替换：
+- 移动端表情替换：
 
 ```javascript 
 function utf16toEntities(str) {
@@ -16,4 +16,9 @@ function utf16toEntities(str) {
     });
     return str;
 } 
+```
+- 移动端输入法替换emoji表情字符
+
+```js
+var re = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
 ```
