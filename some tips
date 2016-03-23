@@ -1,5 +1,6 @@
 移动端表情替换：
-```js
+
+```javascript 
 function utf16toEntities(str) {
     var patt=/[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
     str = str.replace(patt, function(char){
@@ -14,5 +15,5 @@ function utf16toEntities(str) {
         }
     });
     return str;
-}
+} 
 ```
