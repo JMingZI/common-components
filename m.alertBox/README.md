@@ -80,7 +80,7 @@ AlertBox.confirms("提示文字", "标题");
 
 4、prompt
 ```js
-AlertBox.confirms("placeholder文字", "标题");
+AlertBox.prompts("placeholder文字", "标题");
 ```
 
 ====================================================================================
