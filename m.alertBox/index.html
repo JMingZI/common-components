@@ -1,44 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>移动端自定义弹窗（PC-or-mobile）</title>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" href="styles/stylesheets/alertbox.css">
-  <style>
-  a{
-    -webkit-highlight-tap: rgba(0,0,0,0);
-    font-size: .4rem;
-    text-decoration: none;
-  }
-  </style>
+  <title>自定义弹窗</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="style/alertBox.css">
 </head>
 <body>
-  <a href="javascript:;" id="btn1">普通弹窗</a>
-  <a href="javascript:;" id="btn2">警告弹窗</a>
-  <a href="javascript:;" id="btn3">输入文本弹窗</a>
-  <script src="alertBox.js"></script>
   <script>
+    var dpi = window.devicePixelRatio;
+    var clientWidth = "";
+    var t = null;
     var fontsize = document.body.clientWidth / 10;
-    document.documentElement.style.fontSize = fontsize + "px"; 
 
-    var AlertBox = new AlertBox({a: 1, debug: false});
-
-    document.getElementById('btn1').onclick = function () {
-      AlertBox.alerts("222"); 
+    if (dpi != 1) {
+      var obj = document.head.getElementsByTagName("meta")[1];
+      var n = 1 / dpi;
+      obj.content = "width=device-width,initial-scale="+n+", maximum-scale="+n+", minimum-scale="+n+", user-scalable=no";
     }
 
-    document.getElementById('btn2').onclick = function () {
-      AlertBox.confirms("警告弹窗", function () {
-        AlertBox.alerts("我是确定"); 
-      }); 
-    }
+    t = window.setInterval(function () {
+      clientWidth = document.body.clientWidth;
+      if (clientWidth != 0) {
+        clearInterval(t);
+        fontsize = clientWidth / 10;
+        document.documentElement.style.fontSize = fontsize + 'px';
+      }
+    }, 10);
+  </script>
+  <script src="zepto.js"></script>
+  <script src="alertBox.js"></script>
 
-    document.getElementById('btn3').onclick = function () {
-      AlertBox.prompts("请输入文本内容", function () {
-        AlertBox.alerts("我是回调"); 
-      }); 
-    }
+  <a href="javascript:;" id="alert1">普通的自定义弹窗</a>
+  <br/>
+  <a href="javascript:;" id="alert2">警告窗</a>
+  <br/>
+  <a href="javascript:;" id="alert3">可输入内容的警告窗</a>
+
+  <script>
+  $('#alert1').click(function(event) {
+    event.stopPropagation();
+    AlertBox.alerts("普通的自定义弹窗");
+  });
+
+  $('#alert2').click(function(event) {
+    event.stopPropagation();
+    AlertBox.confirms("普通的自定义弹窗", "标题");
+  });
+
+  $('#alert3').click(function(event) {
+    event.stopPropagation();
+    AlertBox.prompts("placeholder", "标题");
+  });
   </script>
 </body>
 </html>

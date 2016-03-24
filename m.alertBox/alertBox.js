@@ -1,33 +1,24 @@
-  "use strict";
-  /*
-   * @ 移动端自定义弹出层
-   * @功能
-   *   1、普通弹窗 @params 提示字符窜，跳转url（可选）
-   *   2、警告框   @params 提示字符窜，点击确定后的回调函数（可选）   
-   *   3、prompt   @params 文本输入placeholder，点击确定后的回调函数（可选）  
-   * @环境：iOS调用原生弹窗，其它调用自定义
-   * @初始化 
-   *   var AlertBox = new AlertBox(
-   *             {
-   *                 debug: false, //开启后，在iOS中也调用自定义弹窗
-   *                 alertBoxKeepTime: 500, //普通弹窗显示时间
-   *                 animationDuration: 300, //弹窗动画经历时间
-   *                 promptMaxlength: 30 //prompt文本输入的最大长度
-   *             }
-   *        );
-   *
-   * @authur JmingZI
-   * @date 2016-2-29
-  */
+/*
+ @name 自定义移动端弹层
+
+  // Also can be used to seajs like this
+  ======================================
+
+  define(function(require, module, exports){
+    
+    ...
+
+    module.exports = AlertBox;
+  });
+*/
+
   function AlertBox (cfg) {
     var _ = this;
-    _.cfg = cfg;  
-    _.el = {
-      body: _.$('body')[0],
-    };
+    _.cfg = cfg;
+    _.showTimer = null;  
+    _.el = { body: _.$('body')[0] };
     _.init();
   }
-
   AlertBox.prototype = {
     init: function () {
       if (this.cfg) {
@@ -35,10 +26,8 @@
                        ? this.cfg.debug : false;
         this.cfg.alertBoxKeepTime = this.cfg.alertBoxKeepTime 
                        ? this.cfg.alertBoxKeepTime : 500;
-        this.cfg.animationDuration = this.cfg.animationDuration 
-                       ? this.cfg.animationDuration : 300;
         this.cfg.promptMaxlength = this.cfg.promptMaxlength 
-                       ? this.cfg.promptMaxlength : 30;
+                       ? this.cfg.promptMaxlength : 20;
       } 
     },
     /*
@@ -46,77 +35,61 @@
       @param 弹层显示的字符
       @param 弹层消失后的跳转地址，可为空。
     */
-    alerts: function (str, url) {
+    alerts: function (str) {
       var _ = this;
+      var alerts = this.$('.alerts')[0];
+      var msg = null;
 
-      if (_.cfg.debug || _.isiOS()) {
-        alert(str);
+      if (alerts) {
+        msg = alerts.childNodes[0];
+        msg.innerText = str;
       } else {
-        var alerts = this.$('.alerts')[0];
-        if (this.el.body.contains(alerts)) {
-          var msg = alerts.childNodes[0];
-          msg.innerText = str;
-        } else {
-          _.createAlertBox(str);
-          alerts = this.$('.alerts')[0];
-        }
-        _.show(alerts);
+        _.createAlertBox(str);
+        alerts = this.$('.alerts')[0];
       }
-
-      window.setTimeout(function () {
-        _.hide(alerts, url);
-      }, _.cfg.alertBoxKeepTime);
+      _.show(alerts, true);
     },
     /*
       带回调函数的警告框
       @param 弹层显示的字符
-      @param 点击确定后的回调函数，可不填
+      @param 弹窗标题，默认为提示
     */
-    confirms: function (str, callback) {
+    confirms: function (str, title) {
       var _ = this;
 
-      if (_.cfg.debug || _.isiOS()) {
-        if (confirm(str)) {
-          callback();
-        }
+      var confirms = this.$('.confirms')[0];
+      if (confirms) {
+        _.resetConfirms();
+        var msg = this.$('.msg')[0].getElementsByTagName('p')[0];
+        msg.innerText = str;
       } else {
-        var confirms = this.$('.confirms')[0];
-        if (this.el.body.contains(confirms)) {
-          _.resetConfirms();
-          var msg = this.$('.msg')[0].getElementsByTagName('p')[0];
-          msg.innerText = str;
-        } else {
-          _.createConfirmBox(str);
-          confirms = this.$('.confirms')[0];
-        }
-        _.show(confirms);
-        _.bindBtnEvent(callback);
+        _.createConfirmBox(str, title);
+        confirms = this.$('.confirms')[0];
       }
+      _.show(confirms, false);
+
+      if (_.cfg.debug || _.isiOS()) confirms.classList.add('iOS');
+      else confirms.classList.remove('iOS');
     },
     /*
       输入文本的弹层，带回调函数
       @param 输入文本的placeholder
-      @param 点击确定后的回调函数，可不填
+      @param 弹窗标题，默认为提示
     */
-    prompts: function (placeholderStr, callback) {
+    prompts: function (placeholderStr, title) {
       var _ = this;
-
-      if (_.cfg.debug || _.isiOS()) {
-        if (prompt(placeholderStr)) {
-          if (typeof callback == 'function') {
-            callback();
-          }
-        }
+      var prompts = this.$('.prompts')[0];
+      if (prompts) {
+        _.resetConfirms();
+        _.changeConfirmToPrompt(placeholderStr, title);
       } else {
-        var prompts = this.$('.prompts')[0];
+        _.changeConfirmToPrompt(placeholderStr, title);
+        prompts = this.$('.prompts')[0];
+      } 
+      _.show(prompts, false);
 
-        if (!this.el.body.contains(prompts)) {
-          _.changeConfirmToPrompt(placeholderStr);
-          prompts = this.$('.prompts')[0];
-        }
-        _.show(prompts);
-        _.bindBtnEvent(callback);
-      }
+      if (_.cfg.debug || _.isiOS()) prompts.classList.add('iOS');
+      else prompts.classList.remove('iOS');
     },
     /*
       自定义获取节点函数
@@ -134,7 +107,7 @@
       }
     },
     /*
-      判断是不是iOS，是iOS，调用系统的，否则其它的用自定义
+      判断是不是iOS，
     */
     isiOS: function () {
       var u = navigator.userAgent
@@ -150,9 +123,7 @@
       var obj = document.createElement("div");
           obj.className = myclass;
 
-      if (text) {
-        obj.innerText = text;
-      }
+      if (text) obj.innerText = text;
       return obj;
     },
     /*
@@ -171,12 +142,13 @@
       创建警告框
       并添加到body子节点
     */
-    createConfirmBox: function (str) {
+    createConfirmBox: function (str, title) {
+          title = (title && title != "") ? title : "提示"; 
       var confirms = this.createElClass("confirms");
       var confirmBox = this.createElClass("confirms-box");
       var msg = this.createElClass("msg");
       var confirmBtns = this.createElClass("confirms-btns");
-      var title = this.createElClass("title", "提示：");
+      var title = this.createElClass("title", title);
       var p = document.createElement("p");
           p.appendChild(document.createTextNode(str));
       var cancel = document.createElement("a");
@@ -210,19 +182,19 @@
       var msg = this.$('.msg')[0];
           msg.getElementsByTagName('p')[0].style.display = "block";
       var textarea = document.getElementById('confirms-prompt');
-      if (textarea) {
-        msg.removeChild(textarea);
-      }
+      if (textarea) msg.removeChild(textarea);
     },
     /*
       在警告框的基础上
       修改节点为文本输入框
     */
-    changeConfirmToPrompt: function (placeholderStr) {
+    changeConfirmToPrompt: function (placeholderStr, title) {
       var confirms = this.$('.confirms')[0];
       if (!confirms) {
-        this.createConfirmBox();
+        this.createConfirmBox(placeholderStr, title);
         confirms = this.$('.confirms')[0];
+      } else {
+        this.$('.title')[0].innerHTML = title;
       }
       confirms.classList.add("prompts");
       //移除p
@@ -237,52 +209,37 @@
     /*
       节点显示函数
     */
-    show: function (obj) {
-      obj.style.display = "block";
-      obj.classList.remove("alertFadeOut");
-      obj.classList.add("alertFadeIn");
-    },
-    /*
-      节点隐藏函数
-      @param 节点对象
-      @param 普通弹层需要跳转的url，可为空
-    */
-    hide: function (obj, url) {
+    show: function (showNode, isAutoHide) {
       var _ = this;
-      obj.classList.remove("alertFadeIn");
-      obj.classList.add("alertFadeOut");
+      showNode.style.display = "block";
 
-      window.setTimeout(function () {
-        obj.style.display = "none";
+      if (!$(showNode).hasClass('alertFadeIn')) {
+        showNode.classList.add("alertFadeIn");
+        showNode.classList.remove("alertFadeOut");
+      }
 
-        if (url && typeof url === "string") {
-          window.location.href = url;
-        }
-      }, _.cfg.animationDuration);
-    },
-    /*
-      绑定弹层按钮
-    */
-    bindBtnEvent: function (callback) {
-      var _ = this;
-      //弹窗关闭事件
-      _.$('.confirms')[0].addEventListener("click", function (event) {
-        _.hide(_.$('.confirms')[0]);
-      }, false);
-
-      // 确定事件
-      _.$('.confirms-confirm')[0].addEventListener("click", function (event) {
-        if (typeof callback == 'function') {
-          callback();
-        }
-      }, false);
-
-      // prompt输入
-      var prompt = document.getElementById('confirms-prompt');
-      if (prompt) {
-        prompt.addEventListener('click', function (event) {
-          event.stopPropagation()
-        }, false);
+      if (isAutoHide) {
+        if (_.showTimer) clearTimeout(_.showTimer);
+        _.showTimer = window.setTimeout(function () {
+          showNode.style.display = "none";
+          showNode.classList.remove("alertFadeIn");
+          showNode.classList.add("alertFadeOut");
+        }, _.cfg.alertBoxKeepTime);
       }
     }
   };
+
+  var AlertBox = new AlertBox({
+    debug: false, 
+    alertBoxKeepTime: 1500,
+    promptMaxlength: 20
+  });
+
+  /*
+    绑定弹层按钮
+  */
+  $(document).on('click', '.confirms-cancel', function(event) {
+    event.preventDefault();
+    AlertBox.$('.confirms')[0].style.display = "none";
+  });
+
