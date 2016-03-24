@@ -4,11 +4,13 @@ var dpi = window.devicePixelRatio;
 var clientWidth = "";
 var t = null;
 var fontsize = document.body.clientWidth / 10;
+
 if (dpi != 1) {
   var obj = document.head.getElementsByTagName("meta")[2];
   var n = 1 / dpi;
   obj.content = "width=device-width,initial-scale="+n+", maximum-scale="+n+", minimum-scale="+n+", user-scalable=no";
 }
+
 t = window.setInterval(function () {
   clientWidth = document.body.clientWidth;
   if (clientWidth != 0) {
