@@ -33,6 +33,8 @@
 
   <a href="javascript:;" id="alert1">普通的自定义弹窗</a>
   <br/>
+  <a href="javascript:;" id="alert4">普通的自定义弹窗2</a>
+  <br/>
   <a href="javascript:;" id="alert2">警告窗</a>
   <br/>
   <a href="javascript:;" id="alert3">可输入内容的警告窗</a>
@@ -41,6 +43,11 @@
   $('#alert1').click(function(event) {
     event.stopPropagation();
     AlertBox.alerts("普通的自定义弹窗");
+  });
+
+  $('#alert4').click(function(event) {
+    event.stopPropagation();
+    AlertBox.alerts("44444444444");
   });
 
   $('#alert2').click(function(event) {

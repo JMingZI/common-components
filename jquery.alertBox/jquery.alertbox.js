@@ -16,17 +16,16 @@
     this.MASK     = obj;
     this.elements = this._getEl();
     this.options  = this._init(options);
+                    this._reset();
                     this._set();
   };
 
   AlertBox.prototype.defaultSetting = {
-    type              : "ALERT", // type ALERT or MODAL
-    modalMinWidth     : '',
-    modalHeight       : '',
-    modalBodyMinHeight: '',
+    type              : "ALERT", // type ALERT or CONFIRM or MODAL
+    width             : '400px',
+    height            : '200px',
     msg               : "",
-    maskcolor         : true,
-    callback          : null,
+    maskcolor         : "rgba(0, 0, 0, 0.5)",
     closeWarning      : false,
     title             : "提示"    
   };
@@ -55,20 +54,15 @@
       , modalHeight = 0
       ;
     // modal box min-width and modal body min-height 
-    if (this.options.modalMinWidth) {
-      this.elements.modal.css("min-width", this.options.modalMinWidth);
+    if (this.options.width) this.elements.modal.css("width", this.options.width);
+
+    // if set modalHeight 
+    if (this.options.height) {
+        this.elements.modal.css("height", this.options.height);
+        this.elements.body.css("height", parseInt(this.options.height) - this.elements.head.outerHeight() - 
+        this.elements.foot.height() + "px");
     }
-    // if set modalHeight , will not use modalBodyMinHeight
-    if (this.options.modalHeight) {
-        this.elements.modal.css("height", this.options.modalHeight);
-        this.elements.body.css("height", 
-        parseInt(this.options.modalHeight) - 
-        this.elements.head.outerHeight() - 
-        this.elements.foot.height() - 20 + "px");
-    }
-    else if (this.options.modalBodyMinHeight) {
-      this.elements.body.css("min-height", this.options.modalBodyMinHeight);
-    }
+
     // modal center position
     modalWidth = this.elements.modal.width();
     modalHeight = this.elements.modal.height();
@@ -82,6 +76,7 @@
       foot   :       this.MASK.find('.foot'),
       title  :       this.MASK.find('.title'),
       body   :       this.MASK.find('.body'),
+      close  :       this.MASK.find('.modal-close'),
       confirm:       this.MASK.find('.modal-confirm')
     };
     return el;
@@ -95,10 +90,21 @@
     if (this.options.type == "ALERT") {
       msgHtml = '<p>' + this.options.msg + '</p>';
       this.elements.body.html(msgHtml);
-      
+      this.elements.close[0].style.display = "none";
+
+      this.elements.confirm.addClass('close');
+    } else {
+      this.elements.confirm.removeClass('close');
     }
     this._show(this.MASK);
     this._setSize();
+  }
+
+  AlertBox.prototype._reset = function () {
+    this.elements.modal.css({'width': this.options.width, 'height': this.options.height});
+    this.MASK.css("background-color", this.options.maskcolor);
+    this.elements.body.html("");
+    this.elements.title.text(this.options.title);
   }
 
   AlertBox.prototype._hide = function (obj) {
@@ -126,13 +132,6 @@
     if (alertbox.options.closeWarning != false && !confirm(alertbox.options.closeWarning)) {
       return false;
     } 
-    alertbox._hide(alertbox.MASK);
-  });
-
-  $(document).on('click', '.modal .modal-confirm', function(event) {
-    if (alertbox.options.callback != null && $.isFunction(alertbox.options.callback)) {
-      alertbox.options.callback();
-    }
     alertbox._hide(alertbox.MASK);
   });
 

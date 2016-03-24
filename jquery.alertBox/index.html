@@ -18,12 +18,13 @@
 
 <a href="javascript:;" class="alert">显示提示弹窗</a>
 <a href="javascript:;" class="alert2">显示提示弹窗2</a>
+<a href="javascript:;" class="alert3">显示提示弹窗3</a>
 
 <!-- modal -->
 <div class="mask">
   <div class="modal">
     <div class="head">
-      <h4 class="title">邮箱服务器配置</h4>
+      <h4 class="title"></h4>
       <span class="close">&times;</span>
     </div>
     <div class="body"></div>
@@ -43,15 +44,25 @@
     $('.mask').alertBox({
       msg: "这是提示",
       title: "你妹",
-      closeWarning: "关闭弹窗会清空内容！确定关闭？",
-      callback: function () {
-        console.log(1);
-      }
+      width: "300px",
+      height: "300px",
+      maskcolor: false,
+      closeWarning: "关闭弹窗会清空内容！确定关闭？"
     });
   });
 
   $('.alert2').click(function(event) {
     $('.mask').alertBox("呵呵呵呵");
+  });
+
+  $('.alert3').click(function(event) {
+    $('.mask').alertBox({
+      type: "CONFIRM",
+      msg: "这是提示",
+      title: "你妹",
+      width: "300px",
+      height: "300px"
+    });
   });
 
 </script>
