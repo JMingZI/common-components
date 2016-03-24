@@ -1,8 +1,11 @@
-- 移动端字体设置
+- 移动端字体设置   
+
 > 移动端设置字体的前提是对`meta`标签`viewport`的设置，即：
+
 ```html
 <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
 ```
+
 再设置字体。
 ```js
 var dpi = window.devicePixelRatio;
