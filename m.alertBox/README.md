@@ -5,10 +5,11 @@
  
  @ 原生移动端自定义弹出层，不依赖`zepto`。   
  
- @ 用法
-  可以直接`@import alertBox.scss`，也可以引入css文件。`自定义样式详见页脚`    
-  引入`alertBox.js`文件。    
-  需设置根字体大小，样式单位用的rem，并设置`meta viewport`。
+ @ 用法  
+ 
+   1、可以直接`@import alertBox.scss`，也可以引入css文件。`自定义样式详见页脚`    
+   2、引入`alertBox.js`文件。    
+   3、需设置根字体大小，样式单位用的rem，并设置`meta viewport`。
     
  ```html
  <meta name="viewport" content="width=device-width,
@@ -72,10 +73,21 @@ AlertBox.confirms("提示文字", "标题");
 AlertBox.confirms("placeholder文字", "标题");
 ```
 
+====================================================================================
+
 @关于自定义样式，`DOM`结构分别如下：
 
-alerts
+alerts  
+
 ![alerts](images/alert.png)
+
+confirms 
+
+![confirms](images/confirm.png)
+
+prompts 
+
+![prompts](images/prompt.png)
 
 
 @ authur [JmingZI](http://ymblog.net)
