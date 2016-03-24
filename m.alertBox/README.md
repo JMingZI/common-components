@@ -1,6 +1,16 @@
 # alertBox
 移动端自定义iOS，安卓弹出层。
 
+!(demo)[images/example1.png]
+
+安卓  
+
+!(demo)[images/example4.png]!(demo)[images/example5.png]
+
+iOS 
+
+!(demo)[images/example2.png]!(demo)[images/example3.png]
+
 ### 说明：
  
  @ 原生移动端自定义弹出层，不依赖`zepto`。   
