@@ -1,5 +1,25 @@
-- 移动端表情替换：
+- 移动端字体设置
+```js
+var dpi = window.devicePixelRatio;
+var clientWidth = "";
+var t = null;
+var fontsize = document.body.clientWidth / 10;
+if (dpi != 1) {
+  var obj = document.head.getElementsByTagName("meta")[2];
+  var n = 1 / dpi;
+  obj.content = "width=device-width,initial-scale="+n+", maximum-scale="+n+", minimum-scale="+n+", user-scalable=no";
+}
+t = window.setInterval(function () {
+  clientWidth = document.body.clientWidth;
+  if (clientWidth != 0) {
+    clearInterval(t);
+    fontsize = clientWidth / 10;
+    document.documentElement.style.fontSize = fontsize + 'px';
+  }
+}, 10);
+```
 
+- 移动端表情替换：
 ```javascript 
 function utf16toEntities(str) {
     var patt=/[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
@@ -18,7 +38,8 @@ function utf16toEntities(str) {
 } 
 ```
 - 移动端输入法替换emoji表情字符
-
 ```js
 var re = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
 ```
+
+
