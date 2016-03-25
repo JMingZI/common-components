@@ -52,7 +52,7 @@ function utf16toEntities(str) {
 var re = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
 ```
 
-- 兼容性好的滚轮事件
+- 兼容性好的滚轮事件，[张鑫旭](http://www.zhangxinxu.com/wordpress/2013/04/js-mousewheel-dommousescroll-event/)
 
 ```js
 /* 
