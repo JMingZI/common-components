@@ -103,21 +103,21 @@ addEvent(document, "mousewheel", function(event) {
 - 自定义事件委托
 ```js
 /*
-    事件委托
-  */
-  var eventBind = function (type, dom, fn) {
-    document.body.addEventListener(type, function (event) {
-      var domObj = null;
-      event = event || window.event;
-      domObj = AlertBox.$(dom);
-      if (event.target && event.target.id === domObj.id) {
-        event.stopPropagation();
-        fn(event.target);        
-      }
-    }, false);
-  };
+  事件委托
+*/
+var eventBind = function (type, dom, fn) {
+  document.body.addEventListener(type, function (event) {
+    var domObj = null;
+    event = event || window.event;
+    domObj = AlertBox.$(dom);
+    if (event.target && event.target.id === domObj.id) {
+      event.stopPropagation();
+      fn(event.target);        
+    }
+  }, false);
+};
 
-  eventBind('click', '#confirms-cancel', function (ev) {
-    AlertBox.hide(ev.parentNode.parentNode.parentNode);
-  });
+eventBind('click', '#confirms-cancel', function (ev) {
+  AlertBox.hide(ev.parentNode.parentNode.parentNode);
+});
 ```
