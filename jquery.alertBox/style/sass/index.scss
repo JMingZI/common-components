@@ -29,7 +29,6 @@ div{
     background-color: #eceeee;
     color: #333;
     padding: 10px 0;
-    // text-indent: 1.5em;
     font-size: 0;
     .title{
       font-size: 16px;
@@ -38,9 +37,6 @@ div{
     }
     .close{
       float: right;
-      // font-size: 20px;
-      // font-weight: 200;
-      // color: #999;
       width: 13px;
       height: 13px;
       cursor: pointer;
@@ -48,7 +44,6 @@ div{
       background: url(../images/x.png) center; 
       @include transition(transform .5s);
       &:hover{
-        // color: #333;
         @include transform(rotate(360deg));
       }
     }

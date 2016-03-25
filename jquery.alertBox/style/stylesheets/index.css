@@ -106,47 +106,46 @@ div {
   padding: 10px 0;
   font-size: 0;
 }
-/* line 34, ../sass/index.scss */
+/* line 33, ../sass/index.scss */
 .modal .head .title {
   font-size: 16px;
   margin-left: 15px;
   display: inline;
 }
-/* line 39, ../sass/index.scss */
+/* line 38, ../sass/index.scss */
 .modal .head .close {
   float: right;
-  font-size: 20px;
-  font-weight: 200;
-  color: #999;
+  width: 13px;
+  height: 13px;
   cursor: pointer;
-  margin-right: 15px;
+  margin-right: 20px;
+  background: url(../images/x.png) center;
   -moz-transition: -moz-transform 0.5s;
   -o-transition: -o-transform 0.5s;
   -webkit-transition: -webkit-transform 0.5s;
   transition: transform 0.5s;
 }
-/* line 47, ../sass/index.scss */
+/* line 46, ../sass/index.scss */
 .modal .head .close:hover {
-  color: #333;
   -moz-transform: rotate(360deg);
   -ms-transform: rotate(360deg);
   -webkit-transform: rotate(360deg);
   transform: rotate(360deg);
 }
-/* line 53, ../sass/index.scss */
+/* line 51, ../sass/index.scss */
 .modal .body {
   min-height: 100px;
   padding: 10px;
   overflow-y: auto;
 }
-/* line 57, ../sass/index.scss */
+/* line 56, ../sass/index.scss */
 .modal .foot {
   height: 60px;
   line-height: 60px;
   text-align: center;
   font-size: 0;
 }
-/* line 62, ../sass/index.scss */
+/* line 61, ../sass/index.scss */
 .modal .foot .modal-btns {
   text-align: center;
   padding: 7px 25px;
@@ -156,26 +155,26 @@ div {
   font-size: 14px;
   border: 1px solid;
 }
-/* line 69, ../sass/index.scss */
+/* line 68, ../sass/index.scss */
 .modal .foot .modal-confirm {
   background-color: #28bd8b;
   border-color: #4cae4c;
   color: #fff;
   margin-left: 10px;
 }
-/* line 74, ../sass/index.scss */
+/* line 73, ../sass/index.scss */
 .modal .foot .modal-confirm:hover {
   background-color: #00ab7b;
   border-color: #398439;
 }
-/* line 79, ../sass/index.scss */
+/* line 78, ../sass/index.scss */
 .modal .foot .modal-close {
   background-color: #fff;
   border-color: #ccc;
   color: #333;
   margin-right: 10px;
 }
-/* line 84, ../sass/index.scss */
+/* line 83, ../sass/index.scss */
 .modal .foot .modal-close:hover {
   background-color: #efefef;
   border-color: #cbcbcb;
