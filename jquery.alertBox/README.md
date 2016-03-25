@@ -43,6 +43,7 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
 
 > 注意：这种的data-name="自定义"，是自定义的，不能重复。且初始化的时候，需要传进去。
 
+```html
 <!-- modal -->
 <div class="mask" data-name="myModal">
   <div class="modal">
