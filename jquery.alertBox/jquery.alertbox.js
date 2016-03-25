@@ -97,33 +97,53 @@
   }
 
   AlertBox.prototype.check = function (options) {
+
+    // CHECK OPTIONS
     if   (typeof options === "string") {this.defaultSetting.msg = options;this.options = this.defaultSetting;}
     else if (typeof options === "object") this.options = $.extend({}, this.defaultSetting, options);
     else { alert("options must be a string or json object!");return false; }
 
+    // CHECK TYPE
     if ('alert,modal,confirm'.indexOf(this.options.type) < 0) {
        alert("modal type is one of alert,modal,confirm!");
        return false; 
     }
-    if (this.options.type == "modal" && typeof this.options.name != "string") { 
-       alert("modal name is require, please set name option!");
-       return false; 
+
+    // CHECK NAME
+    if (typeof this.options.name == "" || typeof this.options.name != "string") {
+      alert("modal name is require or not empty");
+      return false; 
     }
+
+    // CHECK MASK
+    var modalObj = $('body').find('.mask[data-name="'+this.options.name+'"]');
+    if (modalObj.length === 0) {
+       alert("modal name is not match width your name!(data-name and name)");
+       return false; 
+    } 
+    if (modalObj.length === 1) this.MASK = modalObj;
+    else if (modalObj.length > 1) this.MASK = $(modalObj[0]);
+
+    if (this.options.type !== "modal") { 
+      var name = this.MASK.attr('data-name');
+      if (name !== "mask") {
+         alert("alert or confirm data-name must be mask!");
+         return false;
+      }
+    }
+
+    // CHECK MASKCOLOR
     if (typeof this.options.maskcolor != "string") {
        alert("modal maskcolor mast be a string!");
        return false; 
     }
+
+    // CHECK Z-INDEX
     if (typeof this.options.zIndex !== "number") {
        alert("modal zIndex mast be a number!");
        return false; 
     }
-    var modalObj = $('body').find('.mask[data-name="'+this.options.name+'"]');
-    if (modalObj.length === 0) {
-       alert("modal name is match width your name!");
-       return false; 
-    } 
-    if   (modalObj.length === 1) this.MASK = modalObj;
-    else if (modalObj.length > 1) this.MASK = $(modalObj[0]);
+    
     return true;
   }
 
