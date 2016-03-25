@@ -26,7 +26,8 @@
     msg               : "",
     maskcolor         : "rgba(0, 0, 0, 0.5)",
     closeWarning      : "",
-    title             : "提示"    
+    title             : "提示",
+    zIndex            : 0    
   };
 
   AlertBox.prototype._getEl = function() {
@@ -56,6 +57,10 @@
     var msgHtml = "";
     this.elements.title.text(this.options.title);
     this.MASK.css("background-color", this.options.maskcolor);
+
+    if (this.options.zIndex != 0) {
+      this.MASK[0].style.zIndex = this.options.zIndex;
+    }
 
     if (this.options.type != "modal") {
       this._reset();
@@ -106,6 +111,10 @@
     }
     if (typeof this.options.maskcolor != "string") {
        alert("modal maskcolor mast be a string!");
+       return false; 
+    }
+    if (typeof this.options.zIndex !== "number") {
+       alert("modal zIndex mast be a number!");
        return false; 
     }
     var modalObj = $('body').find('.mask[data-name="'+this.options.name+'"]');
