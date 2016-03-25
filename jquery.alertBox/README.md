@@ -60,6 +60,7 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
 ```
 
 3、初始化及参数：
+
 ```js
 $('.mask').alertBox({
   // 默认是alert，可选confirm，modal
