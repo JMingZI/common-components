@@ -12,62 +12,22 @@
   // SET ALERTBOX OBJECT
   // =================== 
 
-  var AlertBox = function (obj, options) {
-    this.MASK     = obj;
-    this.elements = this._getEl();
-    this.options  = this._init(options);
-                    this._reset();
-                    this._set();
+  var AlertBox = function (options) {
+    if (!this.check(options)) return false;
+    this._getEl();
+    this._set();
   };
 
   AlertBox.prototype.defaultSetting = {
     type              : "alert", // type ALERT or CONFIRM or MODAL
+    name              : "mask",
     width             : '400px',
     height            : '200px',
     msg               : "",
     maskcolor         : "rgba(0, 0, 0, 0.5)",
-    closeWarning      : false,
+    closeWarning      : "",
     title             : "提示"    
   };
-
-  // INIT SETTINGS AND STYLES
-  // ========================
-
-  AlertBox.prototype._init = function (options) {
-    // set title
-    if (options.title) this.elements.title.text(options.title);
-    else this.elements.title.text(this.defaultSetting.title);
-      
-    if (typeof options == "string"){ this.defaultSetting.msg = options;return this.defaultSetting; }
-    else if (typeof options == "object") { 
-      // mask bg color
-      if (options.maskcolor == false) this.MASK.css("background-color", "transparent");
-      else if (options.maskcolor && typeof options.maskcolor == "string") {
-        this.MASK.css("background-color", options.maskcolor);
-      }
-      return $.extend({}, this.defaultSetting, options);
-    }
-  }
-
-  AlertBox.prototype._setSize = function () {
-    var modalWidth  = 0
-      , modalHeight = 0
-      ;
-    // modal box min-width and modal body min-height 
-    if (this.options.width) this.elements.modal.css("width", this.options.width);
-
-    // if set modalHeight 
-    if (this.options.height) {
-        this.elements.modal.css("height", this.options.height);
-        this.elements.body.css("height", parseInt(this.options.height) - this.elements.head.outerHeight() - 
-        this.elements.foot.height() + "px");
-    }
-
-    // modal center position
-    modalWidth = this.elements.modal.width();
-    modalHeight = this.elements.modal.height();
-    this.elements.modal.css({"margin-left": -modalWidth/2+"px", "margin-top": -modalHeight/2+"px"});
-  }
 
   AlertBox.prototype._getEl = function() {
     var el = {
@@ -78,27 +38,9 @@
       body   :       this.MASK.find('.body'),
       close  :       this.MASK.find('.modal-close'),
       confirm:       this.MASK.find('.modal-confirm'),
-
       htmlBody:      $('body')
     };
-    return el;
-  }
-
-  // FOR TYPE TO SET DOM SHOW
-  // ========================
-
-  AlertBox.prototype._set = function() {
-    var msgHtml = "";
-    if (this.options.type == "alert") {
-      msgHtml = '<p>' + this.options.msg + '</p>';
-      this.elements.body.html(msgHtml);
-      this.elements.close[0].style.display = "none";
-
-      this.elements.confirm.addClass('close');
-    } 
-
-    this._show(this.MASK);
-    this._setSize();
+    this.elements = el;
   }
 
   AlertBox.prototype._reset = function () {
@@ -110,11 +52,84 @@
     this.elements.confirm.removeClass('close');
   }
 
+  AlertBox.prototype._set = function() {
+    var msgHtml = "";
+    this.elements.title.text(this.options.title);
+    this.MASK.css("background-color", this.options.maskcolor);
+
+    if (this.options.type != "modal") {
+      this._reset();
+      msgHtml = this.options.msg;
+      this.elements.body.html(msgHtml);
+
+      if (this.options.type == "alert") {
+        this.elements.close[0].style.display = "none";
+        this.elements.confirm.addClass('close');
+      }
+    } else {
+      if (this.options.closeWarning != "") this.MASK.attr('data-warning', this.options.closeWarning);
+    }
+
+    this._show(this.MASK);
+    this._setSize();
+  }
+
+  AlertBox.prototype._setSize = function () {
+    var modalWidth  = 0
+      , modalHeight = 0
+      ;
+    if (this.options.width) this.elements.modal.css("width", this.options.width);
+
+    if (this.options.height) {
+        this.elements.modal.css("height", this.options.height);
+        this.elements.body.css("height", parseInt(this.options.height) - this.elements.head.outerHeight() - 
+        this.elements.foot.height() + "px");
+    }
+
+    modalWidth = this.elements.modal.width();
+    modalHeight = this.elements.modal.height();
+    this.elements.modal.css({"margin-left": -modalWidth/2+"px", "margin-top": -modalHeight/2+"px"});
+  }
+
+  AlertBox.prototype.check = function (options) {
+    if   (typeof options === "string") {this.defaultSetting.msg = options;this.options = this.defaultSetting;}
+    else if (typeof options === "object") this.options = $.extend({}, this.defaultSetting, options);
+    else { alert("options must be a string or json object!");return false; }
+
+    if ('alert,modal,confirm'.indexOf(this.options.type) < 0) {
+       alert("modal type is one of alert,modal,confirm!");
+       return false; 
+    }
+    if (this.options.type == "modal" && typeof this.options.name != "string") { 
+       alert("modal name is require, please set name option!");
+       return false; 
+    }
+    if (typeof this.options.maskcolor != "string") {
+       alert("modal maskcolor mast be a string!");
+       return false; 
+    }
+    var modalObj = $('body').find('.mask[data-name="'+this.options.name+'"]');
+    if (modalObj.length === 0) {
+       alert("modal name is match width your name!");
+       return false; 
+    } 
+    if   (modalObj.length === 1) this.MASK = modalObj;
+    else if (modalObj.length > 1) this.MASK = $(modalObj[0]);
+    return true;
+  }
+
   AlertBox.prototype._hide = function (obj) {
     obj[0].style.display = "none";
 
     if (this.elements.htmlBody.height() > $(window).height()) {
-      this.elements.htmlBody.css('overflow', '');
+        var maskIsAllHide = true;
+        var maskNode = $('body').find('.mask');
+      if (maskNode.length >= 2) {
+        maskNode.each(function(index, el) {
+          if (this.style.display === "block") maskIsAllHide = false;     
+        });
+      }
+      if (maskIsAllHide) this.elements.htmlBody.css('overflow', '');
     }
   }
 
@@ -122,7 +137,7 @@
     obj[0].style.display = "block";
     
     if (this.elements.htmlBody.height() > $(window).height()) {
-      this.elements.htmlBody.css('overflow', 'hidden');
+        this.elements.htmlBody.css('overflow', 'hidden');
     }
   }
 
@@ -131,7 +146,7 @@
 
   var alertbox = null;
   function Plugin(options) {
-    alertbox = new AlertBox(this, options);
+    alertbox = new AlertBox(options);
     return alertbox;
   }
   $.fn.alertBox = Plugin;
@@ -140,10 +155,11 @@
   // ==========================
 
   $(document).on("click", ".modal .close, .modal .modal-close", function (event) {
-    if (alertbox.options.closeWarning != false && !confirm(alertbox.options.closeWarning)) {
-      return false;
-    } 
-    alertbox._hide(alertbox.MASK);
+    var maskNode = $(this).parent().parent().parent();
+    var warning = maskNode.attr('data-warning');
+
+    if (warning && !confirm(warning)) return false;
+    alertbox._hide(maskNode);
   });
 
 }(jQuery);

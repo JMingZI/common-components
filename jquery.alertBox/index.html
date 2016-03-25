@@ -19,20 +19,55 @@
 <a href="javascript:;" class="alert">显示提示弹窗</a>
 <a href="javascript:;" class="alert2">显示提示弹窗2</a>
 <a href="javascript:;" class="alert3">显示提示弹窗3</a>
+<a href="javascript:;" class="alert4">显示modal</a>
+<a href="javascript:;" class="alert5">显示modal2</a>
 
 <div style="width: 300px;height: 300px;background-color: #eee;"></div>
 <div style="width: 300px;height: 300px;background-color: #eee;"></div>
 <div style="width: 300px;height: 300px;background-color: #eee;"></div>
 <div style="width: 300px;height: 300px;background-color: #eee;"></div>
 
-<!-- modal -->
-<div class="mask">
+<!-- alert confirm -->
+<div class="mask" data-name="mask">
   <div class="modal">
     <div class="head">
       <h4 class="title"></h4>
       <span class="close"></span>
     </div>
     <div class="body"></div>
+    <div class="foot">
+      <a href="javascript:;" class="modal-btns modal-close">关闭</a>
+      <a href="javascript:;" class="modal-btns modal-confirm">确定</a>
+    </div>  
+  </div>
+</div>
+
+<!-- modal -->
+<div class="mask" data-name="modal1">
+  <div class="modal">
+    <div class="head">
+      <h4 class="title"></h4>
+      <span class="close"></span>
+    </div>
+    <div class="body">
+    </div>
+    <div class="foot">
+      <a href="javascript:;" class="modal-btns modal-close">关闭</a>
+      <a href="javascript:;" class="modal-btns modal-confirm">确定</a>
+    </div>  
+  </div>
+</div>
+
+<!-- modal -->
+<div class="mask" data-name="modal2">
+  <div class="modal">
+    <div class="head">
+      <h4 class="title"></h4>
+      <span class="close"></span>
+    </div>
+    <div class="body">
+      <a href="javascript:;" class="alert4">显示modal</a>
+    </div>
     <div class="foot">
       <a href="javascript:;" class="modal-btns modal-close">关闭</a>
       <a href="javascript:;" class="modal-btns modal-confirm">确定</a>
@@ -51,7 +86,7 @@
       title: "你妹",
       width: "300px",
       height: "300px",
-      maskcolor: false
+      maskcolor: "transparent"
     });
   });
 
@@ -65,8 +100,29 @@
       msg: "这是提示",
       title: "你妹",
       width: "500px",
+      height: "200px"
+    });
+  });
+
+  $('.alert4').click(function(event) {
+    $('.mask').alertBox({
+      type: "modal",
+      name: "modal1",
+      title: "modal",
+      width: "500px",
       height: "200px",
-      closeWarning: "关闭弹窗会清空内容！确定关闭？"
+    });
+  });
+
+  $('.alert5').click(function(event) {
+    $('.mask').alertBox({
+      type: "modal",
+      name: "modal2",
+      title: "modal",
+      width: "300px",
+      height: "300px",
+      closeWarning: "关闭弹窗会清空内容！确定关闭？",
+      maskcolor: "transparent"
     });
   });
 
