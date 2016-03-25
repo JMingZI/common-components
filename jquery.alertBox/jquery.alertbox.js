@@ -21,7 +21,7 @@
   };
 
   AlertBox.prototype.defaultSetting = {
-    type              : "ALERT", // type ALERT or CONFIRM or MODAL
+    type              : "alert", // type ALERT or CONFIRM or MODAL
     width             : '400px',
     height            : '200px',
     msg               : "",
@@ -87,15 +87,14 @@
 
   AlertBox.prototype._set = function() {
     var msgHtml = "";
-    if (this.options.type == "ALERT") {
+    if (this.options.type == "alert") {
       msgHtml = '<p>' + this.options.msg + '</p>';
       this.elements.body.html(msgHtml);
       this.elements.close[0].style.display = "none";
 
       this.elements.confirm.addClass('close');
-    } else {
-      this.elements.confirm.removeClass('close');
-    }
+    } 
+    
     this._show(this.MASK);
     this._setSize();
   }
@@ -105,6 +104,8 @@
     this.MASK.css("background-color", this.options.maskcolor);
     this.elements.body.html("");
     this.elements.title.text(this.options.title);
+    this.elements.close[0].style.display = "inline";
+    this.elements.confirm.removeClass('close');
   }
 
   AlertBox.prototype._hide = function (obj) {

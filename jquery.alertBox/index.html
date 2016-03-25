@@ -46,8 +46,7 @@
       title: "你妹",
       width: "300px",
       height: "300px",
-      maskcolor: false,
-      closeWarning: "关闭弹窗会清空内容！确定关闭？"
+      maskcolor: false
     });
   });
 
@@ -57,11 +56,12 @@
 
   $('.alert3').click(function(event) {
     $('.mask').alertBox({
-      type: "CONFIRM",
+      type: "confirm",
       msg: "这是提示",
       title: "你妹",
-      width: "300px",
-      height: "300px"
+      width: "500px",
+      height: "200px",
+      closeWarning: "关闭弹窗会清空内容！确定关闭？"
     });
   });
 
