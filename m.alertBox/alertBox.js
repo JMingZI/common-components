@@ -11,6 +11,7 @@
     module.exports = AlertBox;
   });
 */
++function (window) {
 
   function AlertBox (cfg) {
     var _ = this;
@@ -154,10 +155,12 @@
       var cancel = document.createElement("a");
           cancel.href = "javascript:;";
           cancel.className = "confirms-btn confirms-cancel";
+          cancel.id = "confirms-cancel";
           cancel.appendChild(document.createTextNode("取消"));
       var confirm = document.createElement("a");
           confirm.href = "javascript:;";
           confirm.className = "confirms-btn confirms-confirm";
+          confirm.id = "confirms-confirm";
           confirm.appendChild(document.createTextNode("确定"));
 
       msg.appendChild(title);
@@ -212,6 +215,7 @@
     show: function (showNode, isAutoHide) {
       var _ = this;
       showNode.style.display = "block";
+      document.body.style.overflow = "hidden";
 
       if (!$(showNode).hasClass('alertFadeIn')) {
         showNode.classList.add("alertFadeIn");
@@ -221,11 +225,15 @@
       if (isAutoHide) {
         if (_.showTimer) clearTimeout(_.showTimer);
         _.showTimer = window.setTimeout(function () {
-          showNode.style.display = "none";
           showNode.classList.remove("alertFadeIn");
           showNode.classList.add("alertFadeOut");
+          _.hide(showNode);
         }, _.cfg.alertBoxKeepTime);
       }
+    },
+    hide: function (hideNode) {
+      hideNode.style.display = "none";
+      document.body.style.overflow = "";
     }
   };
 
@@ -236,10 +244,25 @@
   });
 
   /*
-    绑定弹层按钮
+    事件委托
   */
-  $(document).on('click', '.confirms-cancel', function(event) {
-    event.preventDefault();
-    AlertBox.$('.confirms')[0].style.display = "none";
+  var eventBind = function (type, dom, fn) {
+    document.body.addEventListener(type, function (event) {
+      var domObj = null;
+      event = event || window.event;
+      domObj = AlertBox.$(dom);
+      if (event.target && event.target.id === domObj.id) {
+        event.stopPropagation();
+        fn(event.target);        
+      }
+    }, false);
+  };
+
+  eventBind('click', '#confirms-cancel', function (ev) {
+    AlertBox.hide(ev.parentNode.parentNode.parentNode);
   });
+
+  window.AlertBox = AlertBox;
+}(window);
+
 
