@@ -103,7 +103,8 @@ $('.mask').alertBox({
       title: "你妹",
       width: "500px",
       height: "200px",
-      maskcolor: "transparent"
+      maskcolor: "transparent",
+       zIndex: 1
     });
   });
   ```
@@ -118,7 +119,8 @@ $('.mask').alertBox({
       width: "300px",
       height: "300px",
       closeWarning: "关闭弹窗会清空内容！确定关闭？",
-      maskcolor: "transparent"
+      maskcolor: "transparent",
+      zIndex: 2
     });
   });
   ```
