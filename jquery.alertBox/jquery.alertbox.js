@@ -77,7 +77,9 @@
       title  :       this.MASK.find('.title'),
       body   :       this.MASK.find('.body'),
       close  :       this.MASK.find('.modal-close'),
-      confirm:       this.MASK.find('.modal-confirm')
+      confirm:       this.MASK.find('.modal-confirm'),
+
+      htmlBody:      $('body')
     };
     return el;
   }
@@ -94,7 +96,7 @@
 
       this.elements.confirm.addClass('close');
     } 
-    
+
     this._show(this.MASK);
     this._setSize();
   }
@@ -110,10 +112,18 @@
 
   AlertBox.prototype._hide = function (obj) {
     obj[0].style.display = "none";
+
+    if (this.elements.htmlBody.height() > $(window).height()) {
+      this.elements.htmlBody.css('overflow', '');
+    }
   }
 
   AlertBox.prototype._show =  function (obj) {
     obj[0].style.display = "block";
+    
+    if (this.elements.htmlBody.height() > $(window).height()) {
+      this.elements.htmlBody.css('overflow', 'hidden');
+    }
   }
 
   // INIT PLUGIN ALERTBOX
