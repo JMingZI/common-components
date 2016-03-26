@@ -3,7 +3,6 @@
 +function () {
   var xx,yy,XX,YY,swipeX,swipeY ;
   document.addEventListener('touchstart',function(event){
-    alert(JSON.stringify(event.targetTouches));
      xx = event.targetTouches[0].screenX ;
      yy = event.targetTouches[0].screenY ;
      swipeX = true;
