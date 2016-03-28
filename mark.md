@@ -1,3 +1,79 @@
+[https://segmentfault.com/a/1190000000339907](https://segmentfault.com/a/1190000000339907)
+
+- 在有些浏览器中，移动端的网页左滑右滑也可以使页面移动，这样体验非常不好，那下面就有一种完美的解决办法。
+```js
++function () {
+  var xx,yy,XX,YY,swipeX,swipeY ;
+  document.addEventListener('touchstart',function(event){
+     xx = event.targetTouches[0].screenX ;
+     yy = event.targetTouches[0].screenY ;
+     swipeX = true;
+     swipeY = true ;
+  });
+  document.addEventListener('touchmove',function(event){
+    XX = event.targetTouches[0].screenX ;
+    YY = event.targetTouches[0].screenY ;
+    if(swipeX && Math.abs(XX-xx)-Math.abs(YY-yy)>0)  //左右滑动
+    {
+        event.stopPropagation();//组织冒泡
+        event.preventDefault();//阻止浏览器默认事件
+        swipeY = false ;
+        //左右滑动
+    }
+    else if(swipeY && Math.abs(XX-xx)-Math.abs(YY-yy)<0){  //上下滑动
+        swipeX = false ;
+        //上下滑动，使用浏览器默认的上下滑动
+    }
+  });
+}();
+```
+其中的移动端触摸事件(也就是event.targetTouches)返回的是：
+```js
+{
+  "0": {
+    "target": {},
+    "identifier": 290533583,
+    "clientX": 253,
+    "clientY": 554,
+    "pageX": 253,
+    "pageY": 554,
+    "screenX": 127,
+    "screenY": 278,
+    "force": 0
+  },
+  "length": 1
+}
+```
+
+- 点击穿透的解决办法：
+```js
+var el = null;
+var list = document.getElementById('list');
+function getEvent(el, e, type) {
+  e = e.changedTouches[0];
+  var event = document.createEvent('MouseEvents');
+  event.initMouseEvent(type, true, true, window, 1, e.screenX, e.screenY, e.clientX, e.clientY, false, false, false, false, 0, null);
+  event.forwardedTouchEvent = true;
+  return event;
+}
+list.addEventListener('touchstart', function (e) {
+  var firstTouch = e.touches[0]
+  el = firstTouch.target;
+  t1 = e.timeStamp;
+})
+list.addEventListener('touchend', function (e) {
+  e.preventDefault();
+  var event = getEvent(el, e, 'click');
+  el.dispatchEvent(event);
+})
+list.addEventListener('click', function (e) {
+  list.style.display = 'none';
+  setTimeout(function () {
+      list.style.display = '';
+  }, 1000);
+});
+```
+
 - 移动端字体设置   
 
 > 移动端设置字体的前提是对`meta`标签`viewport`的设置，即：
