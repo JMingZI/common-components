@@ -3,6 +3,9 @@
 1，初始化
   
 ```js
+// 设置全局的点击选人对象，方便找到界面中已选择的人
+window.setPeoplePanel = $(obj);
+
 var choosePeople = null;
 if (!choosePeople) {
   choosePeople = new People({
