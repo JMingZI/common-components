@@ -43,6 +43,34 @@
 }
 ```
 
+- 点击穿透的解决办法：
+```js
+var el = null;
+var list = document.getElementById('list');
+function getEvent(el, e, type) {
+  e = e.changedTouches[0];
+  var event = document.createEvent('MouseEvents');
+  event.initMouseEvent(type, true, true, window, 1, e.screenX, e.screenY, e.clientX, e.clientY, false, false, false, false, 0, null);
+  event.forwardedTouchEvent = true;
+  return event;
+}
+list.addEventListener('touchstart', function (e) {
+  var firstTouch = e.touches[0]
+  el = firstTouch.target;
+  t1 = e.timeStamp;
+})
+list.addEventListener('touchend', function (e) {
+  e.preventDefault();
+  var event = getEvent(el, e, 'click');
+  el.dispatchEvent(event);
+})
+list.addEventListener('click', function (e) {
+  list.style.display = 'none';
+  setTimeout(function () {
+      list.style.display = '';
+  }, 1000);
+});
+```
 
 - 移动端字体设置   
 
