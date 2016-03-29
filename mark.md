@@ -20,7 +20,7 @@
         event.preventDefault();//阻止浏览器默认事件
         //swipeY = false ;
         //左右滑动
-    }
+    //}
     //else if(swipeY && Math.abs(XX-xx)-Math.abs(YY-yy)<0){  //上下滑动
         //swipeX = false ;
         //上下滑动，使用浏览器默认的上下滑动
