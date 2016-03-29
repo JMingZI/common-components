@@ -45,33 +45,43 @@
 }
 ```
 
-- 点击穿透的解决办法：
+- 点击穿透的解决办法，自定义模拟事件：
 ```js
-var el = null;
-var list = document.getElementById('list');
-function getEvent(el, e, type) {
-  e = e.changedTouches[0];
-  var event = document.createEvent('MouseEvents');
-  event.initMouseEvent(type, true, true, window, 1, e.screenX, e.screenY, e.clientX, e.clientY, false, false, false, false, 0, null);
-  event.forwardedTouchEvent = true;
-  return event;
-}
-list.addEventListener('touchstart', function (e) {
-  var firstTouch = e.touches[0]
-  el = firstTouch.target;
-  t1 = e.timeStamp;
-})
-list.addEventListener('touchend', function (e) {
-  e.preventDefault();
-  var event = getEvent(el, e, 'click');
-  el.dispatchEvent(event);
-})
-list.addEventListener('click', function (e) {
-  list.style.display = 'none';
-  setTimeout(function () {
-      list.style.display = '';
-  }, 1000);
-});
+/*
+  快速点击
+*/
++function () {
+  var touch = {};
+  var t = new Date().getTime();
+  document.addEventListener('click', function (event) {
+    if (event.myclick == true) {
+      return true;
+    }
+    if (event.stopImmediatePropagation) {
+      event.stopImmediatePropagation();
+    } else {
+      event.propagationStopped = true;
+    }
+    event.stopPropagation();
+    event.preventDefault();
+    return true;
+  }, true);
+
+  document.addEventListener('touchstart', function (e) {
+    touch.startTime = e.timeStamp;
+    touch.el = e.target;
+    t = e.timeStamp;
+  });
+  document.addEventListener('touchmove', function (e) { });
+  document.addEventListener('touchend', function (e) {
+    touch.last = e.timeStamp;
+    var event = document.createEvent('Events');
+    event.initEvent('click', true, true, window, 1, e.changedTouches[0].screenX, e.changedTouches[0].screenY, e.changedTouches[0].clientX, e.changedTouches[0].clientY, false, false, false, false, 0, null);
+    event.myclick = true;
+    touch.el && touch.el.dispatchEvent(event);
+    return true;
+  });
+}();
 ```
 
 - 移动端字体设置   
