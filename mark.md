@@ -89,6 +89,18 @@
 }();
 ```
 
+再一种办法是增加一个透明的层，300ms后移除，其实也是一个完美的解决办法
+
+```js
+avoidClickThrouth: function () {
+  var mask = $('<div style="position:fixed;width:100%;height:100%;background-color:transparent;top:0;"></div>');
+  $('body').append(mask);
+  window.setTimeout(function () {
+    $(mask).remove();
+  }, 300);
+}
+```
+
 - 移动端字体设置   
 
 > 移动端设置字体的前提是对`meta`标签`viewport`的设置，即：
