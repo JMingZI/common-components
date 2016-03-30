@@ -71,16 +71,20 @@
   document.addEventListener('touchstart', function (e) {
     touch.startTime = e.timeStamp;
     touch.el = e.target;
+    touch.startClientX = e.changedTouches[0].clientX;
     t = e.timeStamp;
   });
   document.addEventListener('touchmove', function (e) { });
   document.addEventListener('touchend', function (e) {
-    touch.last = e.timeStamp;
-    var event = document.createEvent('Events');
-    event.initEvent('click', true, true, window, 1, e.changedTouches[0].screenX, e.changedTouches[0].screenY, e.changedTouches[0].clientX, e.changedTouches[0].clientY, false, false, false, false, 0, null);
-    event.myclick = true;
-    touch.el && touch.el.dispatchEvent(event);
-    return true;
+    // 判断点击的是同一个点，否则就认为不是点击
+    if (touch.startClientX == e.changedTouches[0].clientX) {
+      touch.last = e.timeStamp;
+      var event = document.createEvent('Events');
+      event.initEvent('click', true, true, window, 1, e.changedTouches[0].screenX, e.changedTouches[0].screenY,         e.changedTouches[0].clientX, e.changedTouches[0].clientY, false, false, false, false, 0, null);
+      event.myclick = true;
+      touch.el && touch.el.dispatchEvent(event);
+      return true;
+    }
   });
 }();
 ```
