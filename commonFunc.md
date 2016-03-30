@@ -22,6 +22,7 @@ var globalF = {
     else
       return name.substr(length-2, length);
   },
+  // 防止input输入框点击穿透
   avoidClickThrouth: function () {
     var mask = $('<div style="position:fixed;width:100%;height:100%;background-color:transparent;top:0;"></div>');
     $('body').append(mask);
