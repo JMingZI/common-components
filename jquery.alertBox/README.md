@@ -10,6 +10,13 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
 
 #### 使用介绍
 
+- 当type 为 alert 或 confirm 时，name默认mask，且DOM结构上 data-name = mask
+  - closeWarning，closeCallback，不用传
+- 当type 为 modal 时
+  - name 为必填 且与data-name一致 并唯一
+  - 如果要传入 closeCallback , closeCallback 必须用引号括起来，closeCallback为自定义
+  - closeWarning 可填可不填
+
 1、引入
   ```html
   <script type="text/javascript" src="../scripts/jquery.alertbox.js"></script>  
@@ -81,7 +88,10 @@ $('.mask').alertBox({
   closeWarning: "关闭弹窗会清空内容！确定关闭？",
   
   //可选, 层级设置，默认为0，即不设置。
-  zIndex: 0
+  zIndex: 0,
+  
+  // type == alert or confirm 时弹窗的上边距，默认为false，则居中
+  modalTop: false
 });
 ```
 
@@ -95,31 +105,33 @@ $('.mask').alertBox({
   confirm弹窗
   
   ```js
+  var ccc = function () { console.log('我是回调confirmCallback'); }
   $('.alert3').click(function(event) {
     $('.mask').alertBox({
       type: "confirm",
-      name: "modal2", // 可选
       msg: "这是提示",
       title: "你妹",
       width: "500px",
       height: "200px",
-      maskcolor: "transparent",
-       zIndex: 1
+      confirmCallback: ccc
     });
   });
   ```
   
   modal 弹窗
   ```js
-  $('.alert5').click(function(event) {
+  var bbb = function () { 
+    console.log('bbb我是关闭回调zindex2'); 
+  }
+  $('.alert4').click(function(event) {
     $('.mask').alertBox({
       type: "modal",
-      name: "modal2", //必填
-      title: "modal",
-      width: "300px",
-      height: "300px",
+      name: "modal1",
+      title: "呵呵",
+      width: "500px",
+      height: "200px",
       closeWarning: "关闭弹窗会清空内容！确定关闭？",
-      maskcolor: "transparent",
+      closeCallback: "bbb",
       zIndex: 2
     });
   });
