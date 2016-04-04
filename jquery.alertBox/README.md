@@ -105,31 +105,33 @@ $('.mask').alertBox({
   confirm弹窗
   
   ```js
+  var ccc = function () { console.log('我是回调confirmCallback'); }
   $('.alert3').click(function(event) {
     $('.mask').alertBox({
       type: "confirm",
-      name: "modal2", // 可选
       msg: "这是提示",
       title: "你妹",
       width: "500px",
       height: "200px",
-      maskcolor: "transparent",
-       zIndex: 1
+      confirmCallback: ccc
     });
   });
   ```
   
   modal 弹窗
   ```js
-  $('.alert5').click(function(event) {
+  var bbb = function () { 
+    console.log('bbb我是关闭回调zindex2'); 
+  }
+  $('.alert4').click(function(event) {
     $('.mask').alertBox({
       type: "modal",
-      name: "modal2", //必填
-      title: "modal",
-      width: "300px",
-      height: "300px",
+      name: "modal1",
+      title: "呵呵",
+      width: "500px",
+      height: "200px",
       closeWarning: "关闭弹窗会清空内容！确定关闭？",
-      maskcolor: "transparent",
+      closeCallback: "bbb",
       zIndex: 2
     });
   });
