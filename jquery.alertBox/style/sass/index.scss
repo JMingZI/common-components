@@ -11,6 +11,7 @@ div{
   left: 0;top: 0;
   background-color: rgba(0,0,0,0.5);
   display: none;
+  z-index: 10000;
 }
 .modal{
   $w: 400px;

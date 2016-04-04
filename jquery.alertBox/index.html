@@ -28,7 +28,7 @@
 <div style="width: 300px;height: 300px;background-color: #eee;"></div>
 
 <!-- alert confirm -->
-<div class="mask" data-name="modal1">
+<div class="mask" data-name="mask">
   <div class="modal">
     <div class="head">
       <h4 class="title"></h4>
@@ -36,7 +36,7 @@
     </div>
     <div class="body"></div>
     <div class="foot">
-      <a href="javascript:;" class="modal-btns modal-close">关闭</a>
+      <a href="javascript:;" class="modal-btns modal-close">取消</a>
       <a href="javascript:;" class="modal-btns modal-confirm">确定</a>
     </div>  
   </div>
@@ -94,27 +94,39 @@
     $('.mask').alertBox("呵呵呵呵");
   });
 
+  var ccc = function () { console.log('我是回调confirmCallback'); }
   $('.alert3').click(function(event) {
     $('.mask').alertBox({
       type: "confirm",
       msg: "这是提示",
       title: "你妹",
       width: "500px",
-      height: "200px"
+      height: "200px",
+      confirmCallback: ccc
     });
   });
 
+  // 当type 为 alert 或 confirm 时，name默认为data-name = mask
+  // 当type 为 modal 时，name为必填 data-name 唯一
+            // 如果要传入 closeCallback , closeCallback 必须为函数名的引用
+
+  var bbb = function () { 
+    console.log('bbb我是关闭回调zindex2'); 
+  }
   $('.alert4').click(function(event) {
     $('.mask').alertBox({
       type: "modal",
       name: "modal1",
-      title: "modal",
+      title: "呵呵",
       width: "500px",
       height: "200px",
+      closeWarning: "关闭弹窗会清空内容！确定关闭？",
+      closeCallback: "bbb",
       zIndex: 2
     });
   });
 
+  var aaa = function () { console.log('aaa我是关闭回调zindex1'); }
   $('.alert5').click(function(event) {
     $('.mask').alertBox({
       type: "modal",
@@ -123,7 +135,7 @@
       width: "300px",
       height: "300px",
       closeWarning: "关闭弹窗会清空内容！确定关闭？",
-      maskcolor: "transparent",
+      closeCallback: "aaa",
       zIndex: 1
     });
   });
