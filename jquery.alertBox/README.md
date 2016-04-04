@@ -78,20 +78,30 @@ $('.mask').alertBox({
   
   // 弹框宽度，默认是400px
   width : "400px",  
+  
   // 弹框高度，默认是200px
   height: "200px", 
   
   //可选，弹框遮罩的颜色，默认rgba(0, 0, 0, 0.5)
   maskcolor: "rgba(0, 0, 0, 0.5)"，
   
-  //可选，关闭弹窗时的提示文字，type=alert,confirm时，设置该值无效
-  closeWarning: "关闭弹窗会清空内容！确定关闭？",
-  
-  //可选, 层级设置，默认为0，即不设置。
+  //默认为0，即不设置。
   zIndex: 0,
   
   // type == alert or confirm 时弹窗的上边距，默认为false，则居中
   modalTop: false
+  
+  // type == confirm 时的确定按钮的回调
+  confirmCallback: function() {}，
+  
+  // type == modal，与data-name 对应
+  name: "modal1",
+  
+  // type == modal，关闭弹窗时的提示文字，type=alert,confirm时，设置该值无效
+  closeWarning: "关闭弹窗会清空内容！确定关闭？",
+  
+  // type == modal，关闭弹窗的回调
+  closeCallback: "function () {}",
 });
 ```
 
