@@ -90,8 +90,8 @@ $('.mask').alertBox({
   //可选, 层级设置，默认为0，即不设置。
   zIndex: 0,
   
-  // type == alert or confirm 时弹窗的上边距
-  modalTop: "200px"
+  // type == alert or confirm 时弹窗的上边距，默认为false，则居中
+  modalTop: false
 });
 ```
 
