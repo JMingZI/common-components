@@ -29,6 +29,10 @@ var globalF = {
     window.setTimeout(function () {
       $(mask).remove();
     }, 300);
-  }
+  },
+  // getComputedWidth
+  getComputedWidth: function (obj) {
+    return parseInt(obj.currentStyle? obj.currentStyle.width : window.getComputedStyle(obj, null).width);        
+  }; 
 };
 ```
