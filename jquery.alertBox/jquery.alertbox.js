@@ -12,6 +12,19 @@
   var targetClick = null;
   var maskSelector = null;
 
+  // ADD STYLE
+  // ==========
+
+  var scripts = document.scripts, stylePath = "";
+  $.each(scripts, function(i, el) {
+    if (scripts[i].src.indexOf('alertbox') > 0) {
+        stylePath = scripts[i].src.substring(0, scripts[i].src.lastIndexOf("/") + 1) + '/style/stylesheets/index.css';
+        return false;
+    }
+  });
+  $('<link/>', {rel: "stylesheet", href: stylePath}).appendTo($('head'));
+
+
   // SET ALERTBOX OBJECT
   // =================== 
 
@@ -38,7 +51,7 @@
 
   AlertBox.prototype._getEl = function() {
     var el = {
-      modal  :       this.MASK.find('.modal'),
+      modal  :       this.MASK.find('.ym-modal'),
       head   :       this.MASK.find('.head'),
       foot   :       this.MASK.find('.foot'),
       title  :       this.MASK.find('.title'),
@@ -61,11 +74,23 @@
   }
 
   AlertBox.prototype._set = function() {
-    var msgHtml = "";
+    var msgHtml = "", IE = this._isIEandVersion(), opacity;
     this.elements.title.text(this.options.title);
-    this.MASK.css("background-color", this.options.maskcolor);
 
-    if (this.options.zIndex !== 0) { this.MASK[0].style.zIndex = this.options.zIndex; }
+    if (!this.options.maskcolor) {
+        //if(!IE || IE >= 9)
+        //    this.MASK.css("background-color", this.options.maskcolor);
+        //else {
+        //    opacity = this.options.maskcolor.substr(this.options.maskcolor.lastIndexOf(",")+1, this.options.maskcolor.length);
+        //    opacity = opacity.substr(0, opacity.length-1);
+        //    opacity = (Number(opacity)*255).toString(16).substr(0, 2);
+        //    this.MASK.css({"filter": "progid:DXImageTransform.Microsoft.gradient(startColorstr=#" + opacity + "000000,endColorstr=#" + opacity + "000000)"});
+        //}
+        this.MASK[0].style.backgroundColor = "transparent";
+    }
+
+
+      if (this.options.zIndex !== 0) { this.MASK[0].style.zIndex = this.options.zIndex; }
 
     if (this.options.type !== "modal") {
     // alert confirm  
@@ -162,7 +187,18 @@
     }
     
     return true;
-  }
+  };
+
+  AlertBox.prototype._isIEandVersion = function () {
+      var userAgent = navigator.userAgent;
+      var b_version = navigator.appVersion.split(";");
+      var trim_Version = b_version[1].replace(/[ ]/g,"");
+      if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1) {
+          return parseInt(trim_Version.substr(4, trim_Version.length));
+      } else {
+          return false;
+      }
+  };
 
   AlertBox.prototype._hide = function (obj) {
     obj[0].style.display = "none";
@@ -201,7 +237,7 @@
   // BIND EVENT TO BTNS ONCE!!!
   // ==========================
 
-  $(document).on("click", ".modal .close, .modal .modal-close", function (event) {
+  $(document).on("click", ".ym-modal .close, .ym-modal .modal-close", function (event) {
     var maskNode = $(this).parent().parent().parent();
 
     if (maskNode.attr('data-name') != "mask") {
