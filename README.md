@@ -1,3 +1,3 @@
-# shinemoCommon
-SHINEMO科技自定义前端公用文件
-x
+# customComponents
+
+自定义公用插件与常用笔记
