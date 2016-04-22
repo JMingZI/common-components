@@ -43,10 +43,12 @@ body {
   -webkit-touch-callout: none; 
   -webkit-text-size-adjust: none; 
   -webkit-user-select: none; 
+          user-select: none;
   -webkit-highlight: none; 
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 textarea{
+  -webkit-appearance:none;
   -webkit-box-shadow: none;
           box-shadow: none;
   padding: 0;
