@@ -19,8 +19,7 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
 
 1、引入
   ```html
-  <script type="text/javascript" src="../scripts/jquery.alertbox.js"></script>  
-  <link rel="stylesheet" href="../styles/stylesheets/alertBox.css">
+  <script type="text/javascript" src="../scripts/jquery.alertbox.js"></script> 
   ```
 
 2、引入DOM结构
@@ -82,8 +81,10 @@ $('.mask').alertBox({
   // 弹框高度，默认是200px
   height: "200px", 
   
-  //可选，弹框遮罩的颜色，默认rgba(0, 0, 0, 0.5)
-  maskcolor: "rgba(0, 0, 0, 0.5)"，
+  //可选，弹框遮罩的颜色，默认黑色，透明度0.3，若需要修改请改index.scss
+  // 若不需要显示, false即可
+  // 否则不传
+  maskcolor: false，
   
   //默认为0，即不设置。
   zIndex: 0,
