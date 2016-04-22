@@ -40,7 +40,7 @@
     width             : '400px',
     height            : '200px',
     msg               : "",
-    maskcolor         : "rgba(0, 0, 0, 0.5)",
+    maskcolor         : true,
     confirmCallback   : "null",
     closeWarning      : "",
     closeCallback     : "null",
