@@ -3,7 +3,6 @@
 <head>
   <title>PC弹窗jquery</title>
   <meta charset="utf-8">   
-  <link rel="stylesheet" type="text/css" href="style/stylesheets/index.css">   
   <style type="text/css">
   a{
     text-decoration: none;
@@ -29,10 +28,10 @@
 
 <!-- alert confirm -->
 <div class="mask" data-name="mask">
-  <div class="modal">
+  <div class="ym-modal">
     <div class="head">
       <h4 class="title"></h4>
-      <span class="close"></span>
+      <span class="ym-close"></span>
     </div>
     <div class="body"></div>
     <div class="foot">
@@ -44,10 +43,10 @@
 
 <!-- modal -->
 <div class="mask" data-name="modal1">
-  <div class="modal">
+  <div class="ym-modal">
     <div class="head">
       <h4 class="title"></h4>
-      <span class="close"></span>
+      <span class="ym-close"></span>
     </div>
     <div class="body">
     </div>
@@ -60,10 +59,10 @@
 
 <!-- modal -->
 <div class="mask" data-name="modal2">
-  <div class="modal">
+  <div class="ym-modal">
     <div class="head">
       <h4 class="title"></h4>
-      <span class="close"></span>
+      <span class="ym-close"></span>
     </div>
     <div class="body">
       <a href="javascript:;" class="alert4">显示modal</a>
@@ -86,7 +85,7 @@
       title: "你妹",
       width: "300px",
       height: "300px",
-      maskcolor: "transparent"
+      maskcolor: false
     });
   });
 
