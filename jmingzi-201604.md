@@ -1,8 +1,8 @@
-## 阶段性总结 2016-04-22
+## 阶段性总结 2016-04
 
-@JmingZI
+@JmingZI 博客[ymblog.net](http://ymblog.net)
 
-#### 一、前言
+### 一、前言
 ***
 
 2015-07-20日星期一是我正式入职讯盟科技的第一天，加入这个大家庭，在此感谢当时在百忙之中抽空看我简历的傅姐，感谢第一轮面我的俊航，也感谢boss吴面我，真是荣幸。
@@ -12,6 +12,8 @@
 其实自己那时候是很多方面都不知道的小白（包括现在也只是了解了些许，进步了些许），比如那时我还从未接触过H5，没用过`zepto`，不清楚模块化概念，只听说过`sea.js`，仅仅会用`jquery`，用这仅有的稻草搭上了大三暑期找实习的千军万马行列中。不了解前后端分离等代码耦合，只是了解`grunt`,`gulp`，并不清楚前端构建工具有哪些，也不知道自动化是啥意思，包括现在自己对这些概念都是理解不深刻的，但是我知道学习的方向就是那些，就是不断抽象代码，不断组件化，即使我现在还不会实现组件化，但是自己一直在向那个方向前进着！使前端变得用起来简单，看起来简单。另外，这就是目的？
 
 由于要毕设返校，故列出一些自己所做的东西以及写法，以方便工作的交接以及互相的一个了解。那其实标题就算不上“阶段性总结”了~~
+
+### 二、项目列表
 
 下面就用做的东西的分类来归类吧，列出来的基本就是前端方面我负责维护的：
 
@@ -25,10 +27,22 @@
 ||老版报表后台(已弃用)|内部推荐h5|
 ||开放注册（管理后台部分）|了解更多FAQ页面（部分）|
 
+git项目地址
 
-#### 二、阐述项目
+|项目名|git地址|分支|
+| :------ | :------ |:---|
+|管理后台|[manage-web](http://git.shinemo.com:7990/projects/CCOAV3/repos/manage-web/browse)|refactor|
+|审批后台|[apps-manage-background](http://git.shinemo.com:7990/projects/CCOAV3/repos/apps-manage-background/browse)|master|
+|审批h5|[attendance_approve](http://git.shinemo.com:7990/projects/CCOAV3/repos/attendance_approve/browse)|master|
+|优邮后台|[umail_web](http://git.shinemo.com:7990/projects/UBANJAVASERVER/repos/umail_web/browse)|master|
+|营销助手|[data-report](http://gitlab.shinemo.com/ub/data-report)|master|
+|开放注册|[masheng-bops](http://gitlab.shinemo.com/masheng/masheng-bops)|master|
+|静态资源存放一|[优小助/新手帮助/FAQ/下载页面等](http://gitlab.shinemo.com/ub/staticresource)|master|
+|静态资源存放二|[公共库/日常文档](http://gitlab.shinemo.com/ub/resource)|master|
 
-##### 1、技术总结
+### 三、阐述项目
+
+#### 1、技术总结
 
 - web端（兼容到IE7）
    - 页面比较少的话（3-4个页面），js就直接拿来写了（用jquery），样式一直都是用的`SASS compass`，自己有总结出 [base.scss](https://github.com/JMingZI/customComponents/blob/master/commonBaseStyle/base.scss) ，详细可点击查看。
@@ -106,7 +120,7 @@
   - js 变量就是驼峰式的 aB
   - 对象形如 Ab
 
-##### 2、具体项目
+#### 2、具体项目
 
 - 审批应用
 
@@ -139,24 +153,11 @@
 
 - 开放注册在原来后台的基础上扩展的，没用任何工具，和原有的一样的结构。
 
-##### 3、git项目地址
 
-|项目名|git地址|分支|
-| :------ | :------ |:---|
-|管理后台|[manage-web](http://git.shinemo.com:7990/projects/CCOAV3/repos/manage-web/browse)|refactor|
-|审批后台|[apps-manage-background](http://git.shinemo.com:7990/projects/CCOAV3/repos/apps-manage-background/browse)|master|
-|审批h5|[attendance_approve](http://git.shinemo.com:7990/projects/CCOAV3/repos/attendance_approve/browse)|master|
-|优邮后台|[umail_web](http://git.shinemo.com:7990/projects/UBANJAVASERVER/repos/umail_web/browse)|master|
-|营销助手|[data-report](http://gitlab.shinemo.com/ub/data-report)|master|
-|开放注册|[masheng-bops](http://gitlab.shinemo.com/masheng/masheng-bops)|master|
-|静态资源存放一|[优小助/新手帮助/FAQ/下载页面等](http://gitlab.shinemo.com/ub/staticresource)|master|
-|静态资源存放二|[公共库/日常文档](http://gitlab.shinemo.com/ub/resource)|master|
-
-
-##### 4、总结的点，也可以[点击这里查看](https://github.com/JMingZI/customComponents)
+#### 3、总结的点，也可以[点击这里查看](https://github.com/JMingZI/customComponents)
 
 - h5
-  - 自定义h5弹窗，目前审批签到都是用的，项目地址：[公用弹窗](https://github.com/JMingZI/customComponents/tree/master/m.alertBox)
+  - 自定义h5弹窗，目前审批签到都是用的，项目地址：[公用弹窗](https://github.com/JMingZI/customComponents/tree/master/m.alertBox),web端 也自定义了弹层，多层复用，项目地址：[公用地址](https://github.com/JMingZI/customComponents/tree/master/jquery.alertBox)
   - 接下来的h5会采用前后端分离的结构，静态资源都使用cdn吧，完全可以、一定要这样尝试了~
   
   - 关于点击穿透
@@ -198,7 +199,8 @@
     if (touch.startClientX == e.changedTouches[0].clientX) {
       touch.last = e.timeStamp;
       var event = document.createEvent('Events');
-      event.initEvent('click', true, true, window, 1, e.changedTouches[0].screenX, e.changedTouches[0].screenY,         e.changedTouches[0].clientX, e.changedTouches[0].clientY, false, false, false, false, 0, null);
+      event.initEvent('click', true, true, window, 1, e.changedTouches[0].screenX, e.changedTouches[0].screenY,        
+      e.changedTouches[0].clientX, e.changedTouches[0].clientY, false, false, false, false, 0, null);
       event.myclick = true;
       touch.el && touch.el.dispatchEvent(event);
       return true;
@@ -265,9 +267,9 @@
 ```
 
   - 输入法替换emoji表情字符的话正则：`/[\uD800-\uDBFF][\uDC00-\uDFFF]/g`
-
-
- 
-- web端
-
-  - 也自定义了弹层，多层复用，项目地址：[公用地址](https://github.com/JMingZI/customComponents/tree/master/jquery.alertBox)
+  
+### 四、收尾
+  
+  对于前端自己的兴趣还是非常强烈的，而在工作之余来学习真的要看时间了，最近闲的日子比较少，所以很多总结和学习也都耽搁了。
+  
+  接下来我们会统一使用工具和一些解决方案，自己也要学习应用相应的内容，例如webpack/gulp/vuejs。
