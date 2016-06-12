@@ -17,7 +17,7 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
   - 如果要传入 closeCallback , closeCallback 必须用引号括起来，closeCallback为自定义
   - closeWarning 可填可不填
 
-1、引入
+1、引入（不需要手动引入css）
   ```html
   <script type="text/javascript" src="../scripts/jquery.alertbox.js"></script> 
   ```
@@ -30,10 +30,10 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
 
 ```html
 <!-- alert -->
-<div class="mask" data-name="mask">
+<div class="mask msg-alert" data-name="mask">
   <div class="ym-modal">
     <div class="head">
-      <h4 class="title"></h4>
+      <p class="title"></p>
       <span class="ym-close"></span>
     </div>
     <div class="body"></div>
@@ -54,7 +54,7 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
 <div class="mask" data-name="myModal">
   <div class="ym-modal">
     <div class="head">
-      <h4 class="title"></h4>
+      <p class="title"></p>
       <span class="ym-close"></span>
     </div>
     <div class="body"></div>
@@ -93,7 +93,7 @@ $('.mask').alertBox({
   modalTop: false
   
   // type == confirm 时的确定按钮的回调
-  confirmCallback: function() {}，
+  confirmCallback: function() {},
   
   // type == modal，与data-name 对应
   name: "modal1",
