@@ -30,7 +30,7 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
 
 ```html
 <!-- alert -->
-<div class="mask msg-alert" data-name="mask">
+<div class="mask msg-alert" data-name="mask" style="display:none;">
   <div class="ym-modal">
     <div class="head">
       <p class="title"></p>
@@ -51,7 +51,7 @@ web端公用弹层，依赖jquery。css使用的`SASS compass`。
 
 ```html
 <!-- modal -->
-<div class="mask" data-name="myModal">
+<div class="mask" data-name="myModal" style="display:none;">
   <div class="ym-modal">
     <div class="head">
       <p class="title"></p>
