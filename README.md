@@ -1,3 +1,5 @@
-# customComponents
+# 自定义公用方法或组件
 
-自定义公用插件与常用笔记
+- web端弹出层：[jquery.alertBox](./jquery.alertBox)
+- 移动端弹出层：[m.alertBox](./m.alertBox)
+- 公用方法类Utils：[Utils](./Utils)
