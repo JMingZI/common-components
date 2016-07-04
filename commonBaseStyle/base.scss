@@ -12,7 +12,7 @@ body{
 	font-size: 14px;
 	overflow: hidden;
 }
-.disabled{
+input[disabled], a[disabled], select[disabled] {
   cursor: not-allowed;
   pointer-events:none;
   opacity: .7;
