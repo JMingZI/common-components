@@ -33,18 +33,12 @@
          * @param: data-errorMsg 验证失败后的提示语
          * @param: data-errorWay 错误提示的方法：next(input后面的dom)、className/ID(错误的DOM节点)、alert(弹窗提示)
          */
-        Utils.init = function () {
-            var validate = Utils.namespace("Utils.formValidate.validate");
-
-            validate({
-                formId: 'form',
-                errorColor: "red",
-                normalColor: "green",
-                alertFunction: ""
-            });
-        }
-
-        Utils.init();
+        Utils.validate({
+            formId: 'form',
+            errorColor: "red",
+            normalColor: "green",
+            alertFunction: ""
+        });
     });
 </script>
 </body>

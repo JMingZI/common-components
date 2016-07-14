@@ -5,6 +5,7 @@
  */
 'use strict';
 var Utils = window.Utils || {};
+var g = window.Com || {};
 
 /**
  * 返回指定的命名空间，如果命名空间不存在则创建命名空间。
@@ -140,46 +141,123 @@ Utils.formValidate = (function () {
 }());
 
 /**
+ * 公用ajax请求
+ * @param url
+ * @param type
+ * @param data
+ * @param successCallback
+ * @param async
+ * @param errorCallback
+ * @param isHideLoading
+ */
+Utils.request = function (url, type, data, successCallback, async, errorCallback, isHideLoading) {
+    var me = this;
+    if (!isHideLoading) {
+        // 创建loading
+        me.showLoading();
+    }
+    var contentType = "application/json;charset=UTF-8";
+    // type == "post" ? "application/json;charset=UTF-8":"";
+    data = data || {}
+    data = (type == "post" ? JSON.stringify(data) : data);
+    async = (async === false) ? false : true;
+
+    $.ajax({
+        url: url,
+        type: type,
+        dataType: 'json',
+        contentType: contentType,
+        async: async,
+        data: data,
+        cache: false,
+        success: function (data) {
+            if(data.success){
+                successCallback(data); }
+            else {
+                // 601是未登录
+                if (data.status == 601) { location.href = data.data; }
+                else {
+                    if (typeof errorCallback == "function") errorCallback(data);
+                    else me.alerts("请求失败：" + data.msg); }
+            }
+        },
+        error: function () {
+            me.alerts("请求失败，网络或接口错误！");
+        },
+        complete: function () {
+            me.hideLoading();
+        }
+    });
+};
+
+/**
  * bfun是Basic Functions Extended的缩写
  * 作用：包括数组、字符串等等数功能扩展
  *
  * @module bfun
  */
 Utils.bfun = {
+    alerts: function (str) {
+        alert(str);
+    },
+    showLoading: function () {
+        var that = $('body').find('.ajax-loading');
+        if (that.length > 0) { that.removeClass('f-dn'); }
+        else {
+            $('<div class="ajax-loading">'
+                +'<img src="'+this.getHref()
+                +'/statics/images/common/loading.gif" />'
+                +'<p>正在处理</p>'
+                +'</div>').appendTo($('body'));
+        }
+    },
+    hideLoading: function () {
+        var that = $('body').find('.ajax-loading');
+        if (!that.hasClass('f-dn')) that.addClass('f-dn');
+    },
+    browser: (function () {
+       return {
+           isIE78Version: function () {
+               var versionArr = navigator.appVersion.split(";");
+               var version = versionArr[1].replace(/[ ]/g, "");
+               if (version == "MSIE7.0" || version == "MSIE8.0") {
+                   return true;
+               } else return false;
+           },
+           getLocationSearch: function () {
+               var search = location.search;
+               var searchObj = {};
+               var key = "";
+
+               if (search) {
+                   var paramArr = search.split("&");
+                   for (var i=0; i<paramArr.length; i++) {
+                       key = paramArr[i].split("=")[0];
+                       key = key.replace(/\?/g, '');
+                       searchObj[key] = paramArr[i].split("=")[1];
+                   }
+                   return searchObj;
+               } else return "";
+           },
+           tableStriped: function(){
+               var ua = navigator.userAgent
+                   , tableObj = $('.m-table-list').find('tr:odd')
+                   ;
+               if(ua.indexOf("MSIE 6.0")>0 || ua.indexOf("MSIE 7.0")>0 || ua.indexOf("MSIE 8.0")>0 ){
+                   tableObj.css('background-color', '#f9f9f9');
+               }
+           }
+       }
+    }),
     array:(function(){
         return {
-            /**
-             * @method isArray 判断是否为数组
-             * @param {Array} 数组
-             * @return {Boolean} 真返回true，否则返回false
-             */
-            isArray: function(){
-                return Object.prototype.toString.call(arguments[0])  === '[object Array]';
-            },
-            /**
-             * @method inArray 检查值是否在数组中
-             * @param {value，Array} 值，数组
-             * @return {Boolean} 真返回true，否则返回undefined
-             */
-            inArray: function(val,arr){
-                for(var i=0,l=arr.length;i<l;i++){
-                    if(arr[i] === val){
-                        return true;
-                    }
-                }
+            absMinArray: function () {
+
             }
         }
     })(),
     string:(function(){
         return {
-            /**
-             * @method trim 过滤字符串两边多余的空格
-             * @param {String} 字符串
-             * @return {String} 字符串
-             */
-            trim: function(){
-                return arguments[0].replace(/(^\s*)|(\s*$)/g, "");
-            },
             /**
              * @method ltrim 过滤字符串左边多余的空格
              * @param {String} 字符串
@@ -195,7 +273,81 @@ Utils.bfun = {
              */
             rtrim: function(){
                 return arguments[0].replace(/s+$/g, "");
+            },
+            filterSpace: function (temp) {
+                if (typeof temp == "object") {
+                    for (var i in temp) {
+                        (typeof temp[i] == "string") && (temp[i] = temp[i].replace(/\s/g, ""));
+                    }
+                }
+                else if (typeof temp == "string") {
+                    temp = temp.replace(/\s/g, "");
+                }
+                else { this.alerts("过滤函数只接受对象和字符串！"); }
+                return temp;
+            },
+            computeFileSize: function (size) {
+                if (size < 1024) {
+                    return size + 'B';
+                } else if (size < 1024*1024) {
+                    return (size / 1024).toFixed(2) + "KB";
+                } else {
+                    return (size / 1024 / 1024).toFixed(2) + "M";
+                }
             }
         }
-    })()
+    })(),
+    date: (function () {
+        var me = this;
+        return {
+            compareDays: function (start, end, type) {
+                (start == "") ? me.alerts(type + "开始时间不能为空") : "";
+                (end == "") ? me.alerts(type + "结束时间不能为空") : "";
+
+                var s = start + " 00:00:00", e = end + " 23:23:59", sd = new Date(s), ed = new Date(e);
+                var c = ed.getTime() - sd.getTime();
+                if (c <= 0) {
+                    me.alerts(type + "结束时间必须大于开始时间");
+                    return false;
+                }
+                return c;
+            },
+            getNowTime : function(type) {
+                var date = new Date()
+                    , y  = date.getFullYear()
+                    , m  = date.getMonth() + 1
+                    , d  = date.getDate()
+                    , h  = date.getHours()
+                    , f  = date.getMinutes()
+                    ;
+
+                m = m > 10 ? m : "0" + m;
+                d = d > 10 ? d : "0" + d;
+                h = h > 10 ? h : "0" + h;
+                f = f > 10 ? f : "0" + f;
+
+                if (type == "expires") {
+                    var start = new Date(y + "/" + m + "/" + d + " " + h + ":" + f + ":00")
+                        , end = new Date(y + "/" + m + "/" + d + " " + "23:59:59")
+                        , half = end.getTime() - start.getTime()
+                        ;
+                    return (half / (24*3600*1000)).toFixed(2);
+                } else {
+                    //return y + '-' + m + '-' + d + ' ' + h + ':' + f;
+                    return y + '-' + m + '-' + d;
+                }
+            }
+        }
+    }())
 };
+
+/**
+ * 利用命名空间返回公用函数集
+ * @type {Object}
+ */
+Utils.init = function () {
+    this.validate = Utils.namespace("Utils.formValidate.validate");
+};
+
+Utils.init();
+
