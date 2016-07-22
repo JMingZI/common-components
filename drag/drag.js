@@ -1,5 +1,5 @@
 "use strict";
-var YmDrag = {};
+var YmDrag = YmDrag || {};
 
 YmDrag.init = function (params) {
     this.body = $("body");
@@ -10,10 +10,7 @@ YmDrag.init = function (params) {
 /**
  * 组件库
  */
-YmDrag.componentLib = {
-    'ym-component-date': '<input type="text" name="date">',
-    'ym-component-img': '<div class="img"></div>'
-};
+YmDrag.componentLib = YmDrag.componentLib || { };
 
 /**
  * 是否在 起始或目标div 中
@@ -25,7 +22,8 @@ YmDrag.isInBox = function (type, pageX, pageY) {
     var box = null;
     if (type == "from") box = this.opts.dragFromBox;
     else box = this.opts.dragToBox;
-
+    // console.log(box.offset().left);
+    // console.log(box.offset().top);
     return !!(pageX >= box.offset().left
     && pageX < (box.offset().left + box.width())
     && pageY >= box.offset().top
@@ -139,10 +137,11 @@ YmDrag.bindEvents = function () {
         ;
 
     // 控件盒子 拖拽绑定
-    me.opts.dragFromBox.find('.ym-drag-item').on("click", function (e) {
+    me.opts.dragFromBox.on("click", ".ym-drag-item", function (e) {
         e.stopPropagation();
         // 此处不会执行
-    }).mousedown(function(e){
+    });
+    me.opts.dragFromBox.on("mousedown", ".ym-drag-item", function(e) {
         _move = true;
         dragCurrNode = $(this);
         dragCurrNode.fadeTo(20, 0.5);
@@ -171,8 +170,16 @@ YmDrag.bindEvents = function () {
         cloneDragNode.css('visibility', "hidden").appendTo( me.opts.dragToBox );
     });
 
+    // 目标盒子 删除
+    me.opts.dragToBox.on("mousedown", '.del-drag', function (e) {
+        e.stopPropagation();
+        $(this).parent().parent().remove();
+        // 删除回调
+        (typeof me.opts.dragItemDelCallback == "function") && me.opts.dragItemDelCallback(cloneDragNode);
+    });
+
     // move监听
-    $(document).mousemove(function(e){
+    $(document).on("mousemove", function(e){
         if ( _move ) {
             !cloneDragNode.hasClass("draging") && cloneDragNode.css('visibility', "visible").addClass("draging");
 
@@ -190,23 +197,31 @@ YmDrag.bindEvents = function () {
                 cloneDragNode.removeAttr("data-nowBox");
             }
         }
-    }).mouseup(function(e){
+    });
+    $(document).on("mouseup", function(e){
         if ( _move ) {
+            var temp;
+
             _move = false;
             dragCurrNode.fadeTo("fast", 1);
 
             _moveX = e.pageX - _downX;
             _moveY = e.pageY - _downY;
+            // console.log(_moveX);
+            // console.log(_moveY);
             if ( !me.isInBox("to", _moveX, _moveY) ) {
                 me.opts.dragToBox.find(cloneDragNode).remove();
+                // 变为可编辑目标
+                // dragCurrNode.addClass('curr-edit');
+                // dragCurrNode.siblings('.ym-drag-item').removeClass('curr-edit');
             } else {
-                //还原组件
-                cloneDragNode.removeClass("draging").addClass("dragged").html(me.componentLib[cloneDragNode.attr("data-componentName")]);
-
-                var temp = me.opts.dragToBox.find('.ym-drag-item');
+                //组件 在提交表单时 还原
+                cloneDragNode.removeClass("draging").addClass("dragged");
                 // 变为可编辑目标
                 cloneDragNode.addClass('curr-edit');
                 cloneDragNode.siblings('.ym-drag-item').removeClass('curr-edit');
+
+                temp = me.opts.dragToBox.find('.ym-drag-item');
 
                 if (temp.length > 1) {
                 // 如果子元素数量大于1才需要考虑
@@ -218,29 +233,25 @@ YmDrag.bindEvents = function () {
                     } else {
                         temp.before(cloneDragNode);
                     }
-                }
+                } 
 
                 // 如果拖动的是目标盒子 子元素
                 if (dragCurrNode.attr('data-nowbox') == 'to') {
                     dragCurrNode.remove();
                 }
+
+                // 拖拽完成回调
+                (typeof me.opts.dragCompleteCallback == "function") && me.opts.dragCompleteCallback(cloneDragNode);
             }
-            cloneDragNode.css('visibility', "visible");
+
+            cloneDragNode.css({'left': '0', 'top': '0', 'visibility': "visible"});
             // 隐藏目标线
             me.body.find(".target-line").css("display", "none");
-
-            // 拖拽完成回调
-            me.opts.dragCompleteCallback(cloneDragNode);
+            
+            // 检查目标盒子是否为空
+            me.opts.dragToBox.find('.ym-drag-item').length == 0 
+            ? me.opts.dragToBox.addClass('empty') : (me.opts.dragToBox.hasClass('empty') && me.opts.dragToBox.removeClass('empty'));
         }
     });
 };
 
-// 初始化
-$(function(){
-    YmDrag.init({
-        dragFromBox: $('.ym-drag-from'),
-        dragToBox: $('.ym-drag-to'),
-        itemMargin: 10,
-        dragCompleteCallback: function (dragObj) { alert(dragObj.attr('class')); }
-    });
-});

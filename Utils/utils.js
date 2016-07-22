@@ -5,7 +5,6 @@
  */
 'use strict';
 var Utils = window.Utils || {};
-var g = window.Com || {};
 
 /**
  * 返回指定的命名空间，如果命名空间不存在则创建命名空间。
@@ -156,9 +155,10 @@ Utils.request = function (url, type, data, successCallback, async, errorCallback
         // 创建loading
         me.showLoading();
     }
-    var contentType = "application/json;charset=UTF-8";
-    // type == "post" ? "application/json;charset=UTF-8":"";
-    data = data || {}
+    //var contentType = "application/json;charset=UTF-8";
+    var contentType = type == "post" ? "application/json;charset=UTF-8":"";
+    //type == "post" ? "application/json;charset=UTF-8":"";
+    data = data || {};
     data = (type == "post" ? JSON.stringify(data) : data);
     async = (async === false) ? false : true;
 
@@ -178,11 +178,11 @@ Utils.request = function (url, type, data, successCallback, async, errorCallback
                 if (data.status == 601) { location.href = data.data; }
                 else {
                     if (typeof errorCallback == "function") errorCallback(data);
-                    else me.alerts("请求失败：" + data.msg); }
+                    else me.alerts(data.msg); }
             }
         },
         error: function () {
-            me.alerts("请求失败，网络或接口错误！");
+            me.alerts("玩大了，网络或接口错误！");
         },
         complete: function () {
             me.hideLoading();
@@ -198,15 +198,16 @@ Utils.request = function (url, type, data, successCallback, async, errorCallback
  */
 Utils.bfun = {
     alerts: function (str) {
-        alert(str);
+        if (AlertBox) {
+            $(".mask").alertBox(str);
+        } else alert(str);
     },
     showLoading: function () {
         var that = $('body').find('.ajax-loading');
         if (that.length > 0) { that.removeClass('f-dn'); }
         else {
             $('<div class="ajax-loading">'
-                +'<img src="'+this.getHref()
-                +'/statics/images/common/loading.gif" />'
+                +'<img src="'+ this.getRoot() +'/images/loading.gif" />'
                 +'<p>正在处理</p>'
                 +'</div>').appendTo($('body'));
         }
@@ -217,6 +218,9 @@ Utils.bfun = {
     },
     browser: (function () {
        return {
+           getRoot: function () {
+               return location.origin;
+           },
            isIE78Version: function () {
                var versionArr = navigator.appVersion.split(";");
                var version = versionArr[1].replace(/[ ]/g, "");
@@ -248,7 +252,7 @@ Utils.bfun = {
                }
            }
        }
-    }),
+    }()),
     array:(function(){
         return {
             absMinArray: function () {
@@ -341,12 +345,28 @@ Utils.bfun = {
     }())
 };
 
+Utils.offen = {
+  reg: {
+      name: /.+/,
+      txt: /.+/,
+      url: /[a-zA-z]+:\/\/[^\s]+/,
+      number: /^[1-9]\d*|0$/
+  }
+};
+
 /**
  * 利用命名空间返回公用函数集
  * @type {Object}
  */
 Utils.init = function () {
     this.validate = Utils.namespace("Utils.formValidate.validate");
+    this.getRoot = Utils.namespace("Utils.bfun.browser.getRoot");
+    this.showLoading = Utils.namespace("Utils.bfun.showLoading");
+    this.hideLoading = Utils.namespace("Utils.bfun.hideLoading");
+    this.alerts = Utils.namespace("Utils.bfun.alerts");
+    this.search = Utils.namespace("Utils.bfun.browser.getLocationSearch");
+    
+    this.reg = Utils.namespace("Utils.offen.reg");
 };
 
 Utils.init();
