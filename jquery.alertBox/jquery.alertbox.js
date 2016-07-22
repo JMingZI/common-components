@@ -185,7 +185,7 @@
 
     modalWidth = this.elements.modal.width();
     modalHeight = this.elements.modal.height();
-    if (this.options.name == "mask" && this.options.modalTop !== false) this.elements.modal.css({"margin-left": -modalWidth/2+"px", "top": this.options.modalTop});
+    if (this.options.modalTop !== false) this.elements.modal.css({"margin-left": -modalWidth/2+"px", "top": this.options.modalTop});
     else this.elements.modal.css({"margin-left": -modalWidth/2+"px", "margin-top": -modalHeight/2+"px"});
   }
 
