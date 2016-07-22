@@ -317,28 +317,20 @@ Utils.bfun = {
                 return c;
             },
             getNowTime : function(type) {
-                var date = new Date()
-                    , y  = date.getFullYear()
-                    , m  = date.getMonth() + 1
-                    , d  = date.getDate()
-                    , h  = date.getHours()
-                    , f  = date.getMinutes()
-                    ;
-
-                m = m > 10 ? m : "0" + m;
-                d = d > 10 ? d : "0" + d;
-                h = h > 10 ? h : "0" + h;
-                f = f > 10 ? f : "0" + f;
-
+                var date = new Date(), y  = date.getFullYear(), m  = date.getMonth() + 1, d  = date.getDate(), h  = date.getHours(), f  = date.getMinutes();
+                m = m > 10 ? m : "0" + m; d = d > 10 ? d : "0" + d; h = h > 10 ? h : "0" + h; f = f > 10 ? f : "0" + f;
                 if (type == "expires") {
                     var start = new Date(y + "/" + m + "/" + d + " " + h + ":" + f + ":00")
                         , end = new Date(y + "/" + m + "/" + d + " " + "23:59:59")
                         , half = end.getTime() - start.getTime()
                         ;
                     return (half / (24*3600*1000)).toFixed(2);
-                } else {
-                    //return y + '-' + m + '-' + d + ' ' + h + ':' + f;
+                } else if (type == "y-m-d h:i"){
+                    return y + '-' + m + '-' + d + ' ' + h + ':' + f;
+                } else if (type == "y-m-d") {
                     return y + '-' + m + '-' + d;
+                } else if (type == "timeStamp") {
+                    return date.getTime();
                 }
             }
         }
@@ -365,7 +357,7 @@ Utils.init = function () {
     this.hideLoading = Utils.namespace("Utils.bfun.hideLoading");
     this.alerts = Utils.namespace("Utils.bfun.alerts");
     this.search = Utils.namespace("Utils.bfun.browser.getLocationSearch");
-    
+    this.time = Utils.namespace("Utils.bfun.date.getNowTime");
     this.reg = Utils.namespace("Utils.offen.reg");
 };
 
