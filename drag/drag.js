@@ -148,8 +148,13 @@ YmDrag.bindEvents = function () {
 
         _downX = e.pageX - parseInt( dragCurrNode.offset().left );
         _downY = e.pageY - parseInt( dragCurrNode.offset().top );
-        // 添加到目标box
+    
         cloneDragNode = dragCurrNode.clone();
+        // 添加到目标box
+        // if (me.opts.dragToBox.find(".ym-drag-item[data-componentname='"+ cloneDragNode.attr('data-componentname') +"']").length > 0) {
+        // 加上时间戳，唯一标识name
+        cloneDragNode.attr("data-componentname", cloneDragNode.attr('data-componentname') + "-" + (new Date()).getTime());
+        // }
         cloneDragNode.css('visibility', "hidden").appendTo( me.opts.dragToBox );
     });
 
@@ -169,15 +174,7 @@ YmDrag.bindEvents = function () {
         cloneDragNode = dragCurrNode.clone();
         cloneDragNode.css('visibility', "hidden").appendTo( me.opts.dragToBox );
     });
-
-    // 目标盒子 删除
-    me.opts.dragToBox.on("mousedown", '.del-drag', function (e) {
-        e.stopPropagation();
-        $(this).parent().parent().remove();
-        // 删除回调
-        (typeof me.opts.dragItemDelCallback == "function") && me.opts.dragItemDelCallback(cloneDragNode);
-    });
-
+    
     // move监听
     $(document).on("mousemove", function(e){
         if ( _move ) {
@@ -201,19 +198,13 @@ YmDrag.bindEvents = function () {
     $(document).on("mouseup", function(e){
         if ( _move ) {
             var temp;
-
             _move = false;
             dragCurrNode.fadeTo("fast", 1);
 
             _moveX = e.pageX - _downX;
             _moveY = e.pageY - _downY;
-            // console.log(_moveX);
-            // console.log(_moveY);
             if ( !me.isInBox("to", _moveX, _moveY) ) {
                 me.opts.dragToBox.find(cloneDragNode).remove();
-                // 变为可编辑目标
-                // dragCurrNode.addClass('curr-edit');
-                // dragCurrNode.siblings('.ym-drag-item').removeClass('curr-edit');
             } else {
                 //组件 在提交表单时 还原
                 cloneDragNode.removeClass("draging").addClass("dragged");
@@ -233,13 +224,11 @@ YmDrag.bindEvents = function () {
                     } else {
                         temp.before(cloneDragNode);
                     }
-                } 
-
+                }
                 // 如果拖动的是目标盒子 子元素
                 if (dragCurrNode.attr('data-nowbox') == 'to') {
                     dragCurrNode.remove();
                 }
-
                 // 拖拽完成回调
                 (typeof me.opts.dragCompleteCallback == "function") && me.opts.dragCompleteCallback(cloneDragNode);
             }
