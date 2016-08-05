@@ -216,10 +216,26 @@ Utils.bfun = {
         var that = $('body').find('.ajax-loading');
         if (!that.hasClass('f-dn')) that.addClass('f-dn');
     },
+    style: (function () {
+        return {
+            getComputedObj: function (obj) {
+                return (obj.currentStyle? obj.currentStyle : window.getComputedStyle(obj, null));
+            }
+        }
+    }()),
     browser: (function () {
        return {
            getRoot: function () {
                return location.origin;
+           },
+           version: function () {
+                var u = navigator.userAgent;
+                var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); 
+                var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
+                if( isAndroid )
+                  return "1";
+                else
+                  return "0";
            },
            isIE78Version: function () {
                var versionArr = navigator.appVersion.split(";");
