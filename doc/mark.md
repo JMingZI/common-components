@@ -1,5 +1,26 @@
-[https://segmentfault.com/a/1190000000339907](https://segmentfault.com/a/1190000000339907)
+常见正则匹配
 
+- 姓名
+```js
+/^(_)(_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$/.test(name);
+```
+
+- 手机号
+```js
+/^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1})|(14[0-9]{1}))+\d{8})$/.test(data.mobile);
+```
+
+- 邮箱
+```js
+/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(data.applicantMail);
+```
+
+- 验证码
+```js
+/^\d{4}$/.test(data.mobileAuthCode);
+```
+
+[https://segmentfault.com/a/1190000000339907](https://segmentfault.com/a/1190000000339907)
 - 在有些浏览器中，移动端的网页左滑右滑也可以使页面移动，这样体验非常不好，那下面就有一种完美的解决办法。
 ```js
 +function () {
