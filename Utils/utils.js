@@ -220,7 +220,15 @@ Utils.bfun = {
         return {
             getComputedObj: function (obj) {
                 return (obj.currentStyle? obj.currentStyle : window.getComputedStyle(obj, null));
-            }
+            },
+            tableStriped: function(){
+               var ua = navigator.userAgent
+                   , tableObj = $('.m-table-list').find('tr:odd')
+                   ;
+               if(ua.indexOf("MSIE 6.0")>0 || ua.indexOf("MSIE 7.0")>0 || ua.indexOf("MSIE 8.0")>0 ){
+                   tableObj.css('background-color', '#f9f9f9');
+               }
+           }
         }
     }()),
     browser: (function () {
@@ -258,14 +266,6 @@ Utils.bfun = {
                    }
                    return searchObj;
                } else return "";
-           },
-           tableStriped: function(){
-               var ua = navigator.userAgent
-                   , tableObj = $('.m-table-list').find('tr:odd')
-                   ;
-               if(ua.indexOf("MSIE 6.0")>0 || ua.indexOf("MSIE 7.0")>0 || ua.indexOf("MSIE 8.0")>0 ){
-                   tableObj.css('background-color', '#f9f9f9');
-               }
            }
        }
     }()),
