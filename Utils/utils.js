@@ -314,6 +314,28 @@ Utils.bfun = {
                 } else {
                     return (size / 1024 / 1024).toFixed(2) + "M";
                 }
+            },
+            /*
+            * 输入框为数字
+            * 监听粘贴，keyup，将非数字替换为数字1
+            * 限制最大值
+            * params {objStr string} 选择器
+            * params {maxValue number}
+            */
+            inputTransformNumber : function (objStr, maxValue) {
+                var me = this;
+                var transform = function () {
+                    if ( this.value.length == 1 ) {
+                        this.value=this.value.replace(/[^1-9]/g, '1');
+                    } else {
+                        this.value=this.value.replace(/\D/g, '1');
+                    }
+                    if (this.value > maxValue) {
+                        me.alerts("排序最大为100,000");
+                        this.value = 100000;
+                    }
+                };
+                $(document).on("afterparse", objStr, transform).on("keyup", objStr, transform);
             }
         }
     })(),
