@@ -1,0 +1,66 @@
+/*************************************
+ * 移动端base
+ * @author JmingZi
+ * @time 2016/08/10
+ ************************************/
+
+/**
+ * 字体大小计算
+ */
+$baseFontSize: 75;
+@function pxToRem($px){
+  @return $px/$baseFontSize * 1rem;
+}
+@function pxToRem2($px){
+  @return pxToRem($px*2)
+}
+
+/**
+ * placeholder
+ */
+::-webkit-input-placeholder { color:#dcdcdc; }
+::-moz-placeholder { color:#dcdcdc; } /* firefox 19+ */
+:-ms-input-placeholder { color:#dcdcdc; } /* ie */
+input:-moz-placeholder { color:#dcdcdc; }
+
+/**
+ * mixin
+ */
+@mixin positionMiddle ($position, $width, $height) {
+  position: $position;left: 50%;top: 50%;
+  margin-left: -$width / 2;
+  margin-top: -$height / 2;
+}
+
+/**
+ * 占位选择器
+ */
+%overText{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+%nowrap{
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: pxToRem(12) solid transparent;
+  border-right: pxToRem(12) solid transparent;
+  $borderColor:#B4B4B4;
+  display:inline-block;
+  float:right;
+  margin:pxToRem(35) pxToRem(40) auto auto;
+  &.down{
+    border-top: pxToRem(14) solid $borderColor;
+  }
+  &.up{
+    border-bottom:pxToRem(14) solid $borderColor;
+  }
+}
+
+
+
