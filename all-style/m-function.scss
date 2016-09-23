@@ -1,40 +1,49 @@
+@charset "utf-8";
 /*************************************
  * 移动端base
  * @author JmingZi
  * @time 2016/08/10
  ************************************/
 
-/**
- * 字体大小计算
- */
+@import "reset";
+
+// 字体大小计算
+@mixin font-dpr($font-size){
+    font-size: $font-size;
+
+    [data-dpr="2"] & {
+        font-size: $font-size * 2;
+    }
+
+    [data-dpr="3"] & {
+        font-size: $font-size * 3;
+    }
+}
+
+// baseFontSize 
 $baseFontSize: 75;
-@function pxToRem($px){
-  @return $px/$baseFontSize * 1rem;
+@function px2rem($px){
+    @return $px/$baseFontSize * 1rem;
 }
-@function pxToRem2($px){
-  @return pxToRem($px*2)
+@function px2rem2($px){
+    @return px2rem($px*2);
 }
 
-/**
- * placeholder
- */
-::-webkit-input-placeholder { color:#dcdcdc; }
-::-moz-placeholder { color:#dcdcdc; } /* firefox 19+ */
-:-ms-input-placeholder { color:#dcdcdc; } /* ie */
-input:-moz-placeholder { color:#dcdcdc; }
+// placeholder color
+$placeholder: #dcdcdc;
+::-webkit-input-placeholder { color:$placeholder; }
+::-moz-placeholder { color:$placeholder; } /* firefox 19+ */
+:-ms-input-placeholder { color:$placeholder; } /* ie */
+input:-moz-placeholder { color:$placeholder; }
 
-/**
- * mixin
- */
+// positionMiddle
 @mixin positionMiddle ($position, $width, $height) {
   position: $position;left: 50%;top: 50%;
   margin-left: -$width / 2;
   margin-top: -$height / 2;
 }
 
-/**
- * 占位选择器
- */
+// 文本处理
 %overText{
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -45,22 +54,37 @@ input:-moz-placeholder { color:#dcdcdc; }
   word-break: keep-all;
 }
 
+// 三角
 .triangle {
   width: 0;
   height: 0;
-  border-left: pxToRem(12) solid transparent;
-  border-right: pxToRem(12) solid transparent;
+  border-left: px2rem(12) solid transparent;
+  border-right: px2rem(12) solid transparent;
   $borderColor:#B4B4B4;
   display:inline-block;
   float:right;
-  margin:pxToRem(35) pxToRem(40) auto auto;
+  margin:px2rem(35) px2rem(40) auto auto;
   &.down{
-    border-top: pxToRem(14) solid $borderColor;
+    border-top: px2rem(14) solid $borderColor;
   }
   &.up{
-    border-bottom:pxToRem(14) solid $borderColor;
+    border-bottom:px2rem(14) solid $borderColor;
   }
 }
 
+/*
+ * TEST DEMO
+.test {
+    @include font-dpr(10px);
+    width: px2rem2(300);
+    margin: 0 auto;
+    border:1px #dcdcdc solid;
+}
+img {
+    display: block;
+    width: px2rem2(355);
+    margin: 0 auto;
+}
+*/
 
 
