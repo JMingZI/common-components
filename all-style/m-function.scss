@@ -9,15 +9,13 @@
 
 // 字体大小计算
 @mixin font-dpr($font-size){
-    font-size: $font-size;
-
-    [data-dpr="2"] & {
-        font-size: $font-size * 2;
-    }
-
-    [data-dpr="3"] & {
-        font-size: $font-size * 3;
-    }
+  font-size: $font-size * 1px;
+  [data-dpr="2"] & {
+    font-size: $font-size * 2px;
+  }
+  [data-dpr="3"] & {
+    font-size: $font-size * 3px;
+  }
 }
 
 // baseFontSize 
