@@ -12,7 +12,7 @@
 - 滚动监听/移动端滑动监听（图片延迟加载、底部分页加载）：[scroll-listen](./scroll-listen)
 - emoji表情相关：[emoji](./emoji)
 - 常见表达式收集：[regex](./regex)
-- 自定义快速点击：[fast-click](./fast-click)
+- 自定义快速点击/事件委托：[fast-click](./fast-click)
 
 # 知识收集站 
 
