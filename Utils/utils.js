@@ -354,7 +354,7 @@ Utils.bfun = {
                 }
                 return c;
             },
-            getNowTime : function(type) {
+            getTime : function(type) {
                 var date = new Date(), y  = date.getFullYear(), m  = date.getMonth() + 1, d  = date.getDate(), h  = date.getHours(), f  = date.getMinutes();
                 m = m > 10 ? m : "0" + m; d = d > 10 ? d : "0" + d; h = h > 10 ? h : "0" + h; f = f > 10 ? f : "0" + f;
                 if (type == "expires") {
@@ -369,6 +369,8 @@ Utils.bfun = {
                     return y + '-' + m + '-' + d;
                 } else if (type == "timeStamp") {
                     return date.getTime();
+                } else {
+                    return +new Date();
                 }
             }
         }
@@ -395,7 +397,7 @@ Utils.init = function () {
     this.hideLoading = Utils.namespace("Utils.bfun.hideLoading");
     this.alerts = Utils.namespace("Utils.bfun.alerts");
     this.search = Utils.namespace("Utils.bfun.browser.getLocationSearch");
-    this.time = Utils.namespace("Utils.bfun.date.getNowTime");
+    this.time = Utils.namespace("Utils.bfun.date.getTime");
     this.reg = Utils.namespace("Utils.offen.reg");
 };
 
