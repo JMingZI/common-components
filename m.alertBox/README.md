@@ -1,15 +1,5 @@
 # alertBox
-移动端自定义iOS，安卓弹出层。
-
-![demo](images/example1.png)
-
-安卓  
-
-![demo](images/example4.png)![demo](images/example5.png)
-
-iOS 
-
-![demo](images/example2.png)![demo](images/example3.png)
+自定义iOS，安卓弹出层。
 
 ### 说明：
  
@@ -19,7 +9,7 @@ iOS
  
    1、可以直接`@import "alert"`，也可以引入css文件。`自定义样式详见页脚`    
    2、引入`alerts.js`文件。    
-   3、需设置根字体大小，样式单位用的rem，并设置`meta viewport`，详细参见[common-components首页之](https://github.com/JMingZI/common-components) [移动端自适应屏幕方案：set-viewport](https://github.com/JMingZI/common-components/blob/master/set-viewport/index.js)。
+   3、样式单位用的rem，详细参见[common-components首页](https://github.com/JMingZI/common-components)——[移动端自适应屏幕方案：set-viewport](https://github.com/JMingZI/common-components/blob/master/set-viewport/index.js)。
     
  ```html
  <head>
