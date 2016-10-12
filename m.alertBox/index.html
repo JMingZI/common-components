@@ -3,63 +3,56 @@
 <head>
   <title>自定义弹窗</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="style/alertBox.css">
+  <script src="https://video.statics.cdn.jituancaiyun.com/js/set-mobile-viewport/2.0/index.js"></script>
 </head>
-<body style="height: 1000rem">
+
+  <a href="javascript:;" id="alert1">1、toast</a>
+  <br/>
+  <a href="javascript:;" id="alert4">2、普通的弹窗</a>
+  <br/>
+  <a href="javascript:;" id="alert5">3、弹窗，定义按钮</a>
+  <br/>
+  <a href="javascript:;" id="alert2">4、普通的警告窗</a>
+  <br/>
+  <a href="javascript:;" id="alert22">5、警告窗定义标题，确定按钮及回调</a>
+  <br/>
+  <a href="javascript:;" id="alert3">6、普通prompts</a>
+  <br/>
+  <a href="javascript:;" id="alert33">7、prompts定义标题，确定按钮及回调</a>
+  
+  <script src="alert.js"></script>
+  
   <script>
-    var dpi = window.devicePixelRatio;
-    var clientWidth = "";
-    var t = null;
-    var fontsize = document.body.clientWidth / 10;
+  document.getElementById("alert1").addEventListener("click", function () {
+      alertbox.toasts("普通的toast");
+  }, false);
 
-    if (dpi != 1) {
-      var obj = document.head.getElementsByTagName("meta")[1];
-      var n = 1 / dpi;
-      obj.content = "width=device-width,initial-scale="+n+", maximum-scale="+n+", minimum-scale="+n+", user-scalable=no";
-    }
+  document.getElementById("alert4").addEventListener("click", function () {
+      alertbox.alerts("普通的弹窗");
+  }, false);
 
-    t = window.setInterval(function () {
-      clientWidth = document.body.clientWidth;
-      if (clientWidth != 0) {
-        clearInterval(t);
-        fontsize = clientWidth / 10;
-        document.documentElement.style.fontSize = fontsize + 'px';
-      }
-    }, 10);
-  </script>
-  <script src="zepto.js"></script>
-  <script src="alertBox.js"></script>
+  document.getElementById("alert5").addEventListener("click", function () {
+      alertbox.alerts("普通的弹窗", "按钮");
+  }, false);
 
-  <a href="javascript:;" id="alert1">普通的自定义弹窗</a>
-  <br/>
-  <a href="javascript:;" id="alert4">普通的自定义弹窗2</a>
-  <br/>
-  <a href="javascript:;" id="alert2">警告窗</a>
-  <br/>
-  <a href="javascript:;" id="alert3">可输入内容的警告窗</a>
+  document.getElementById("alert2").addEventListener("click", function () {
+      alertbox.confirms("普通的警告窗1");
+  }, false);
 
-  <script>
-  $('#alert1').click(function(event) {
-    event.stopPropagation();
-    AlertBox.alerts("普通的自定义弹窗");
-  });
+  document.getElementById("alert22").addEventListener("click", function () {
+      alertbox.confirms("普通的警告窗2", "标题没有默认值", "我是确定按钮", function () { alertbox.toasts("我是confirms回调") });
+  }, false);
 
-  $('#alert4').click(function(event) {
-    event.stopPropagation();
-    AlertBox.alerts("44444444444");
-  });
+  document.getElementById("alert3").addEventListener("click", function () {
+    alertbox.prompts("placeholder1");
+  }, false);
 
-  $('#alert2').click(function(event) {
-    event.stopPropagation();
-    AlertBox.confirms("普通的自定义弹窗", "标题");
-  });
-
-  $('#alert3').click(function(event) {
-    event.stopPropagation();
-    AlertBox.prompts("placeholder", "标题");
-  });
+  document.getElementById("alert33").addEventListener("click", function () {
+    alertbox.prompts("placeholder2", "标题没有默认值", "我是确定按钮", function () { alertbox.toasts("我是prompts回调") });
+  }, false);
 
   </script>
+
 </body>
 </html>

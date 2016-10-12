@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+.cl {
+  *zoom:1;
+}
+.cl:after, .cl:before {
+  content:".";
+  display:block;
+  clear:both;
+  height:0px;
+  overflow:hidden;
+}
+.hide{
+  display: none!important;
+}
+
+/**
+ * 字体大小计算
+ */
+$baseFontSize: 75;
+@function pxToRem($px){
+  @return $px/$baseFontSize * 1rem;
+}
+@function pxToRem2($px){
+  @return pxToRem($px*2)
+}
+
+// 字体大小计算
+@mixin font-dpr($font-size){
+  font-size: $font-size * 1px;
+  [data-dpr="2"] & {
+    font-size: $font-size * 2px;
+  }
+  [data-dpr="3"] & {
+    font-size: $font-size * 3px;
+  }
+}
+
+@mixin GPU {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/**
+ * placeholder
+ */
+::-webkit-input-placeholder { color:#dcdcdc; }
+::-moz-placeholder { color:#dcdcdc; } /* firefox 19+ */
+:-ms-input-placeholder { color:#dcdcdc; } /* ie */
+input:-moz-placeholder { color:#dcdcdc; }
+
+/**
+ * mixin
+ */
+@mixin positionMiddle ($position, $width, $height) {
+  position: $position;left: 50%;top: 50%;
+  margin-left: -$width / 2;
+  margin-top: -$height / 2;
+}
+
+/**
+ * 占位选择器
+ */
+%overText{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+%nowrap{
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: pxToRem(12) solid transparent;
+  border-right: pxToRem(12) solid transparent;
+  $borderColor:#B4B4B4;
+  display:inline-block;
+  float:right;
+  margin:pxToRem(35) pxToRem(40) auto auto;
+  &.down{
+    border-top: pxToRem(14) solid $borderColor;
+  }
+  &.up{
+    border-bottom:pxToRem(14) solid $borderColor;
+  }
+}
