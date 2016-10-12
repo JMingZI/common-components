@@ -17,43 +17,21 @@ iOS
  
  @ 用法  
  
-   1、可以直接`@import alertBox.scss`，也可以引入css文件。`自定义样式详见页脚`    
-   2、引入`alertBox.js`文件。    
-   3、需设置根字体大小，样式单位用的rem，并设置`meta viewport`。
+   1、可以直接`@import "alert"`，也可以引入css文件。`自定义样式详见页脚`    
+   2、引入`alerts.js`文件。    
+   3、需设置根字体大小，样式单位用的rem，并设置`meta viewport`，详细参见[common-components首页之](https://github.com/JMingZI/common-components) [移动端自适应屏幕方案：set-viewport](https://github.com/JMingZI/common-components/blob/master/set-viewport/index.js)。
     
  ```html
- <meta name="viewport" content="width=device-width,
-      initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
- <link rel="stylesheet" href="style/alertbox.css">
- <script src="alertBox.js"></script>
+ <head>
+    <script src="alerts.js"></script>
+ </head>
  ```
- ```js
-  var dpi = window.devicePixelRatio;
-  var clientWidth = "";
-  var t = null;
-  var fontsize = document.body.clientWidth / 10;
-
-  if (dpi != 1) {
-    var obj = document.head.getElementsByTagName("meta")[1];
-    var n = 1 / dpi;
-    obj.content = "width=device-width,initial-scale="+n+", maximum-scale="+n+", minimum-scale="+n+", user-scalable=no";
-  }
-
-  t = window.setInterval(function () {
-    clientWidth = document.body.clientWidth;
-    if (clientWidth != 0) {
-      clearInterval(t);
-      fontsize = clientWidth / 10;
-      document.documentElement.style.fontSize = fontsize + 'px';
-    }
-  }, 10);
- ```
- 
  @ 功能   
- 
-   * 1、普通弹窗 `@params 提示字符窜，自定义时间后消失` 
-   * 2、警告框   `@params 提示字符窜，弹窗标题（默认为*提示*）`     
-   * 3、prompt   `@params 文本输入placeholder，弹窗标题（默认为*提示*）`      
+  
+   * 1、toast `@params str` 
+   * 2、普通弹窗 `@params str + confirm text` 
+   * 3、警告框   `@params str + title + confirm text + confirmCallback`     
+   * 4、prompt   `@params placeholder + title + confirm text + confirmCallback`      
       
 @ 初始化
  
@@ -68,19 +46,42 @@ iOS
 ```
 @例子：
 
-1、普通弹窗
+1、toast
+
 ```js
-AlertBox.alerts("222");
+alertbox.toasts("普通的toast");
+```
+
+2、普通弹窗
+
+```js
+alertbox.alerts("普通的弹窗");
+
+alertbox.alerts("普通的弹窗", "按钮");
 ```
 
 3、警告框
+
 ```js
-AlertBox.confirms("提示文字", "标题");
+alertbox.confirms("普通的警告窗1");
+
+alertbox.confirms("普通的警告窗2", "标题没有默认值", "我是确定按钮"
+    , function () { 
+        alertbox.toasts("我是confirms回调") 
+      }
+);
 ```
 
 4、prompt
+
 ```js
-AlertBox.prompts("placeholder文字", "标题");
+alertbox.prompts("placeholder1");
+
+alertbox.prompts("placeholder2", "标题没有默认值", "我是确定按钮"
+    , function () { 
+        alertbox.toasts("我是prompts回调") 
+      }
+);
 ```
 
 ====================================================================================
@@ -102,4 +103,4 @@ prompts
 
 @ authur [JmingZI](http://ymblog.net)
 
-@ date 2016-2-29
+@ date 2016-2-29 / First modified at 2016/10/12
