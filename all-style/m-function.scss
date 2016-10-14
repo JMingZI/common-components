@@ -4,8 +4,15 @@
  * @author JmingZi
  * @time 2016/08/10
  ************************************/
-
 @import "reset";
+// baseFontSize 
+$baseFontSize: 75;
+@function px2rem($px){
+    @return $px/$baseFontSize * 1rem;
+}
+@function px2rem2($px){
+    @return px2rem($px*2);
+}
 
 // 字体大小计算
 @mixin font-dpr($font-size){
@@ -29,28 +36,22 @@
   -webkit-perspective:1000;
 }
 
-
-// baseFontSize 
-$baseFontSize: 75;
-@function px2rem($px){
-    @return $px/$baseFontSize * 1rem;
-}
-@function px2rem2($px){
-    @return px2rem($px*2);
-}
-
-// placeholder color
-$placeholder: #dcdcdc;
-::-webkit-input-placeholder { color:$placeholder; }
-::-moz-placeholder { color:$placeholder; } /* firefox 19+ */
-:-ms-input-placeholder { color:$placeholder; } /* ie */
-input:-moz-placeholder { color:$placeholder; }
-
-// positionMiddle
-@mixin positionMiddle ($position, $width, $height) {
-  position: $position;left: 50%;top: 50%;
-  margin-left: -$width / 2;
-  margin-top: -$height / 2;
+@mixin absolute-middle ($width, $height, $top, $left) {
+    position: absolute;
+    width:pxToRem($width);
+    height:pxToRem($height);
+    @if ($top != "") {
+        top: pxToRem($top);
+    } @else {
+        top:50%;
+        margin-top: pxToRem(-$height/2);
+    }
+    @if ($left != "") {
+        left: pxToRem($left);
+    } @else {
+        left:50%;
+        margin-left: pxToRem(-$width/2);
+    }
 }
 
 // 文本处理
@@ -81,6 +82,13 @@ input:-moz-placeholder { color:$placeholder; }
     border-bottom:px2rem(14) solid $borderColor;
   }
 }
+
+// placeholder color
+$placeholder: #dcdcdc;
+::-webkit-input-placeholder { color:$placeholder; }
+::-moz-placeholder { color:$placeholder; } /* firefox 19+ */
+:-ms-input-placeholder { color:$placeholder; } /* ie */
+input:-moz-placeholder { color:$placeholder; }
 
 /*
  * TEST DEMO
