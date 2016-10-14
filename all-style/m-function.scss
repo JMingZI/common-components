@@ -36,6 +36,11 @@ $baseFontSize: 75;
   -webkit-perspective:1000;
 }
 
+/* *
+ * 用法
+ * @include absolute-middle(params) {
+    }
+ */
 @mixin absolute-middle ($width, $height, $top, $left) {
     position: absolute;
     width:pxToRem($width);
@@ -52,6 +57,7 @@ $baseFontSize: 75;
         left:50%;
         margin-left: pxToRem(-$width/2);
     }
+    @content;
 }
 
 // 文本处理
