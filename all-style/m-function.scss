@@ -96,19 +96,38 @@ $placeholder: #dcdcdc;
 :-ms-input-placeholder { color:$placeholder; } /* ie */
 input:-moz-placeholder { color:$placeholder; }
 
-/*
- * TEST DEMO
-.test {
-    @include font-dpr(10px);
-    width: px2rem2(300);
-    margin: 0 auto;
-    border:1px #dcdcdc solid;
+// border
+// 对于宽度为100%的 边框 1px无法实现
+// 采用defore模拟实现
+@mixin border($color, $borderRadius, $borderWidth, $zIndex) {
+    position: relative;
+    border: none;
+    &:before {
+        content:'';
+        position: absolute;
+        top:0;
+        left:0;
+        width: 200%;
+        height: 200%;
+        border-style:solid;
+        border-color:$color;
+        border-width:$borderWidth;
+        border-radius:$borderRadius;
+        -webkit-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scale(0.5, 0.5);
+        -ms-transform: scale(0.5, 0.5);
+        -o-transform: scale(0.5, 0.5);
+        transform: scale(0.5, 0.5);
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: $zIndex;
+        pointer-events: none;
+    }
 }
-img {
-    display: block;
-    width: px2rem2(355);
-    margin: 0 auto;
-}
-*/
 
 
