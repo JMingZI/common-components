@@ -1,3 +1,5 @@
+【置顶】React滑动分页实现：[SlidePage.js](SlideMove.js)
+
 详细例子请见`test.html` 
 
 移动端滑动判断：
