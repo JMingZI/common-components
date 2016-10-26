@@ -131,3 +131,16 @@ input:-moz-placeholder { color:$placeholder; }
 }
 
 
+.cl{
+  &{
+    *zoom:1;
+  }
+  &:after,
+  &:before{
+    content: ".";
+    display:block;
+    clear: both;
+    height: 0px;
+        overflow: hidden;
+  }
+}
