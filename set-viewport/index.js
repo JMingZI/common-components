@@ -15,6 +15,7 @@
             doc.write(wrap.innerHTML);
         }
     }
+    var originWidth = docEl.getBoundingClientRect().width;
 
     // document data-dpr set font-size px
     var dpr = window.devicePixelRatio;
@@ -26,7 +27,6 @@
         dpr = 1;
     }
     docEl.setAttribute('data-dpr', dpr);
-
     var scale = parseFloat((1 / dpr).toFixed(2));
     if (dpr != 1) {
         metaEl.setAttribute('content', 'width=device-width,initial-scale='+ scale +', maximum-scale='+ scale +', minimum-scale='+ scale +', user-scalable=no');
@@ -34,8 +34,14 @@
 
     // document width
     function setDocumentFontSize () {
-        var width = docEl.getBoundingClientRect().width;
-        docEl.style.fontSize = width / 10 + 'px';
+        var scaleWidth = docEl.getBoundingClientRect().width;
+        docEl.style.fontSize = scaleWidth / 10 + 'px';
+
+        if (scaleWidth == originWidth) {
+            docEl.setAttribute('data-dpr', 1);
+            scale = 1;
+            metaEl.setAttribute('content', 'width=device-width,initial-scale='+ scale +', maximum-scale='+ scale +', minimum-scale='+ scale +', user-scalable=no');
+        }
     }
     setDocumentFontSize();
 

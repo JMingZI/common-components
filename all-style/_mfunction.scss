@@ -1,21 +1,13 @@
 @charset "utf-8";
-/*************************************
- * 移动端base
- * @author JmingZi
- * @time 2016/08/10
- ************************************/
 @import "reset";
+
 // baseFontSize 
 $baseFontSize: 75;
-@function px2rem($px){
-    @return $px/$baseFontSize * 1rem;
-}
-@function px2rem2($px){
-    @return px2rem($px*2);
-}
+@function px2rem($px){ @return $px/$baseFontSize * 1rem; }
+@function px2rem2($px){ @return px2rem($px*2); }
 
 // 字体大小计算
-@mixin font-dpr($font-size){
+@mixin font-dpr ($font-size) {
   font-size: $font-size * 1px;
   [data-dpr="2"] & {
     font-size: $font-size * 2px;
@@ -42,55 +34,33 @@ $baseFontSize: 75;
     }
  */
 @mixin absolute-middle ($width, $height, $top, $left) {
-    position: absolute;
-    width:px2rem($width);
-    height:px2rem($height);
-    @if ($top != "") {
-        top: px2rem($top);
-    } @else {
-        top:50%;
-        margin-top: px2rem(-$height/2);
-    }
-    @if ($left != "") {
-        left: px2rem($left);
-    } @else {
-        left:50%;
-        margin-left: px2rem(-$width/2);
-    }
-    @content;
+  position: absolute;width:px2rem($width);height:px2rem($height);
+
+  @if ($top != "") { top: px2rem($top); } 
+  @else { top:50%;margin-top: px2rem(-$height/2); }
+
+  @if ($left != "") { left: px2rem($left); } 
+  @else { left:50%;margin-left: px2rem(-$width/2); }
+
+  @content;
 }
 
 // 文本处理
-%overText{
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-%nowrap{
-  white-space: nowrap;
-  word-break: keep-all;
-}
+%overText { white-space: nowrap;text-overflow: ellipsis;overflow: hidden; }
+%nowrap{ white-space: nowrap;word-break: keep-all; }
 
 // 三角
 .triangle {
-  width: 0;
-  height: 0;
+  display:inline-block;width: 0;height: 0;
   border-left: px2rem(12) solid transparent;
   border-right: px2rem(12) solid transparent;
-  $borderColor:#B4B4B4;
-  display:inline-block;
-  float:right;
   margin:px2rem(35) px2rem(40) auto auto;
-  &.down{
-    border-top: px2rem(14) solid $borderColor;
-  }
-  &.up{
-    border-bottom:px2rem(14) solid $borderColor;
-  }
+  &.down{ border-top: px2rem(14) solid #B4B4B4; }
+  &.up{ border-bottom:px2rem(14) solid #B4B4B4; }
 }
 
 // placeholder color
-$placeholder: #dcdcdc;
+$placeholder: #999;
 ::-webkit-input-placeholder { color:$placeholder; }
 ::-moz-placeholder { color:$placeholder; } /* firefox 19+ */
 :-ms-input-placeholder { color:$placeholder; } /* ie */
@@ -100,15 +70,9 @@ input:-moz-placeholder { color:$placeholder; }
 // 对于宽度为100%的 边框 1px无法实现
 // 采用defore模拟实现
 @mixin border($color, $borderRadius, $borderWidth, $zIndex) {
-    position: relative;
-    border: none;
+    position: relative;border: none;
     &:before {
-        content:'';
-        position: absolute;
-        top:0;
-        left:0;
-        width: 200%;
-        height: 200%;
+        position: absolute;top:0;left:0;width: 200%;height: 200%;content:'';
         border-style:solid;
         border-color:$color;
         border-width:$borderWidth;
@@ -131,16 +95,12 @@ input:-moz-placeholder { color:$placeholder; }
 }
 
 
-.cl{
-  &{
-    *zoom:1;
-  }
-  &:after,
-  &:before{
-    content: ".";
-    display:block;
-    clear: both;
-    height: 0px;
-        overflow: hidden;
-  }
+%cl{ 
+  &{ *zoom:1; }
+  &:after, &:before{ content: ".";display:block;clear: both;height: 0px;overflow: hidden;}
+}
+
+@mixin btn () {
+  display: inline-block;
+  
 }

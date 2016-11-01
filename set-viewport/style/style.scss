@@ -1,0 +1,39 @@
+@charset "utf-8";
+@import "reset";
+
+// 字体大小计算
+@mixin font-dpr($font-size){
+    font-size: $font-size * 1px;
+
+    [data-dpr="2"] & {
+        font-size: $font-size * 2px;
+    }
+
+    [data-dpr="3"] & {
+        font-size: $font-size * 3px;
+    }
+}
+
+// baseFontSize 
+$baseFontSize: 75;
+@function px2rem($px){
+    @return $px/$baseFontSize * 1rem;
+}
+@function px2rem2($px){
+    @return px2rem($px*2);
+}
+
+/*------------------------------------------------------*/
+
+
+.test {
+    @include font-dpr(10);
+    width: px2rem2(300);
+    margin: 0 auto;
+    border:1px #dcdcdc solid;
+}
+img {
+    display: block;
+    width: px2rem2(355);
+    margin: 0 auto;
+}
