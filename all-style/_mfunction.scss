@@ -43,19 +43,19 @@ $baseFontSize: 75;
  */
 @mixin absolute-middle ($width, $height, $top, $left) {
     position: absolute;
-    width:pxToRem($width);
-    height:pxToRem($height);
+    width:px2rem($width);
+    height:px2rem($height);
     @if ($top != "") {
-        top: pxToRem($top);
+        top: px2rem($top);
     } @else {
         top:50%;
-        margin-top: pxToRem(-$height/2);
+        margin-top: px2rem(-$height/2);
     }
     @if ($left != "") {
-        left: pxToRem($left);
+        left: px2rem($left);
     } @else {
         left:50%;
-        margin-left: pxToRem(-$width/2);
+        margin-left: px2rem(-$width/2);
     }
     @content;
 }
