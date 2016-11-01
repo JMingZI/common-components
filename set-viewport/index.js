@@ -35,6 +35,7 @@
     // document width
     function setDocumentFontSize () {
         var scaleWidth = docEl.getBoundingClientRect().width;
+        scaleWidth = originWidth > 540 ? 540*dpr : scaleWidth;
         docEl.style.fontSize = scaleWidth / 10 + 'px';
         
         // 部分手机，例如三星note2
