@@ -100,7 +100,12 @@ input:-moz-placeholder { color:$placeholder; }
   &:after, &:before{ content: ".";display:block;clear: both;height: 0px;overflow: hidden;}
 }
 
-@mixin btn () {
+@mixin btn ($pt, $pr, $bg, $radius, $border-color: transparent) {
   display: inline-block;
-  
+  padding: $pt $pr;
+  border: 1px solid $border-color;
+  border-radius: px2rem2($radius);
+  background-color: $bg;
+  color: #fff;
+  @content;
 }

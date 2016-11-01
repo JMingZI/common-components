@@ -66,3 +66,6 @@
 .icon-company{color: #67a0e2;}
 .icon-folder{color: #f4bb61;}
 
+.btn-default {
+    @include btn(7, 25, #fff, 3, #ccc);
+}
