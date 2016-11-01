@@ -35,10 +35,14 @@
     // document width
     function setDocumentFontSize () {
         var scaleWidth = docEl.getBoundingClientRect().width;
+        scaleWidth = originWidth > 540 ? 540*dpr : scaleWidth;
         docEl.style.fontSize = scaleWidth / 10 + 'px';
-
+        
+        // 部分手机，例如三星note2
+        // 缩放前和缩放后的宽度是不变的，但是dpr却变化了，导致字体放大了而屏幕没有缩小
         if (scaleWidth == originWidth) {
             docEl.setAttribute('data-dpr', 1);
+            // 这部分代码其实冗余
             scale = 1;
             metaEl.setAttribute('content', 'width=device-width,initial-scale='+ scale +', maximum-scale='+ scale +', minimum-scale='+ scale +', user-scalable=no');
         }
