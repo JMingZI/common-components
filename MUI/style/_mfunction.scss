@@ -1,0 +1,131 @@
+@charset "utf-8";
+// baseFontSize
+$baseFontSize: 75;
+@function px2rem($px){ @return $px/$baseFontSize * 1rem; }
+@function px2rem2($px){ @return px2rem($px*2); }
+
+// 固定的字体大小
+@mixin font-dpr($font-size){
+    font-size: $font-size * 1px;
+    [data-dpr="2"] & {
+        font-size: $font-size * 2px;
+    }
+    [data-dpr="3"] & {
+        font-size: $font-size * 3px;
+    }
+}
+
+// 开启gpu加速
+@mixin GPU {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility:hidden;
+    -webkit-perspective:1000;
+}
+
+// @include absolute-middle(params) { @content }
+@mixin absolute-middle ($width, $height, $top, $left) {
+    position: absolute;
+    width:px2rem($width);
+    height:px2rem($height);
+    @if ($top != "") {
+        top: px2rem($top);
+    } @else {
+        top:50%;
+        margin-top: px2rem(-$height/2);
+    }
+    @if ($left != "") {
+        left: px2rem($left);
+    } @else {
+        left:50%;
+        margin-left: px2rem(-$width/2);
+    }
+    @content;
+}
+
+// 文本处理
+%overText{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+%nowrap{
+    white-space: nowrap;
+    word-break: keep-all;
+}
+
+// 三角
+%triangle {
+    width: 0;
+    height: 0;
+    border-left: px2rem(12) solid transparent;
+    border-right: px2rem(12) solid transparent;
+    $borderColor:#B4B4B4;
+    display:inline-block;
+    float:right;
+    margin:px2rem(35) px2rem(40) auto auto;
+    &.down{
+        border-top: px2rem(14) solid $borderColor;
+    }
+    &.up{
+        border-bottom:px2rem(14) solid $borderColor;
+    }
+}
+
+// border
+// 对于宽度为100%的 边框 1px无法实现
+// 采用defore模拟实现
+@mixin border($color, $borderRadius, $borderWidth, $zIndex) {
+    position: relative;
+    border: none;
+    &:before {
+        content:'';
+        position: absolute;
+        top:0;
+        left:0;
+        width: 200%;
+        height: 200%;
+        border-style:solid;
+        border-color:$color;
+        border-width:$borderWidth;
+        border-radius:$borderRadius;
+        -webkit-transform-origin: 0 0;
+        -moz-transform-origin: 0 0;
+        -ms-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+        transform-origin: 0 0;
+        -webkit-transform: scale(0.5, 0.5);
+        -ms-transform: scale(0.5, 0.5);
+        -o-transform: scale(0.5, 0.5);
+        transform: scale(0.5, 0.5);
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: $zIndex;
+        pointer-events: none;
+    }
+}
+
+%cl{
+    &{ *zoom:1; }
+    &:after,
+    &:before{
+        content: ".";
+        display:block;
+        clear: both;
+        height: 0;
+        overflow: hidden;
+    }
+}
+
+@mixin margin-padding ($px, $type, $der: '') {
+    @if ($der != '') {
+        #{$type}-#{$der}: px2rem2($px)
+    }
+    @else {
+        #{$type}: px2rem2($px)
+    }
+}

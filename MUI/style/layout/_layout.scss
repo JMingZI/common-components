@@ -1,0 +1,33 @@
+@import "../mfunction";
+@import "../var";
+
+.text-center { text-align: center }
+.line-through { text-decoration: line-through }
+
+.fl { float: left }
+.fr { float: right }
+
+// 1px
+.border-t { @include border($borderColor, 0, 1px 0 0 0, 1) }
+.border-b { @include border($borderColor, 0, 0 0 1px 0, 1) }
+.border { @include border($borderColor, 0, 1px, 1) }
+
+// padding
+.padding-t10 { @include margin-padding(10, 'padding', 'top') }
+.padding-t15 { @include margin-padding(15, 'padding', 'top') }
+.padding-t20 { @include margin-padding(20, 'padding', 'top') }
+
+.padding-b10 { @include margin-padding(10, 'padding', 'bottom') }
+.padding-b15 { @include margin-padding(15, 'padding', 'bottom') }
+.padding-b20 { @include margin-padding(20, 'padding', 'bottom') }
+
+// margin
+.margin-10 { @include margin-padding(10, 'margin') }
+
+.margin-t10 { @include margin-padding(10, 'margin', 'top') }
+.margin-t15 { @include margin-padding(15, 'margin', 'top') }
+.margin-t20 { @include margin-padding(20, 'margin', 'top') }
+
+.margin-b10 { @include margin-padding(10, 'margin', 'bottom') }
+.margin-b15 { @include margin-padding(15, 'margin', 'bottom') }
+.margin-b20 { @include margin-padding(20, 'margin', 'bottom') }
