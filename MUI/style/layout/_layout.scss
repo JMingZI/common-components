@@ -1,8 +1,11 @@
+// layout about
 @import "../mfunction";
 @import "../var";
 
-.text-center { text-align: center }
-.line-through { text-decoration: line-through }
+.display-i { display: inline; }
+.display-b { display: block; }
+.display-ib { display: inline-block; }
+.display-n { display: none; }
 
 .fl { float: left }
 .fr { float: right }
@@ -13,6 +16,12 @@
 .border { @include border($borderColor, 0, 1px, 1) }
 
 // padding
+.padding-10 { @include margin-padding(10, 'padding') }
+
+.padding-tb10 { @include margin-padding(10 0, 'padding') }
+
+.padding-lr10 { @include margin-padding(0 10, 'padding') }
+
 .padding-t10 { @include margin-padding(10, 'padding', 'top') }
 .padding-t15 { @include margin-padding(15, 'padding', 'top') }
 .padding-t20 { @include margin-padding(20, 'padding', 'top') }

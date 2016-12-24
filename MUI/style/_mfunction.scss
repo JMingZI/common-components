@@ -125,6 +125,9 @@ $baseFontSize: 75;
     @if ($der != '') {
         #{$type}-#{$der}: px2rem2($px)
     }
+    @else if (length($px) == 2) {
+        #{$type}: px2rem2(nth($px, 1)) px2rem2(nth($px, 2));
+    }
     @else {
         #{$type}: px2rem2($px)
     }
