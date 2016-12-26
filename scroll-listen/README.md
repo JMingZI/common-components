@@ -1,4 +1,22 @@
-【置顶】React滑动分页实现：[SlidePage.js](SlideMove.js)
+【置顶】React滑动分页实现：[SlidePage.js](SlideMove.js)   
+
+另一种简单的实现：
+
+```js
+scrollPage () {
+    // 滚动的高度 + 容器的高度 >= 容器内容的高度
+    // request
+    // page++
+    // loading = true
+}
+ComponentDidMount () {
+    window.addEventListener('scroll', this.scrollPage)
+}
+
+ComponentWillUnMount () {
+    window.removeEventListener('scroll', this.scrollPage)
+}
+```
 
 详细例子请见`test.html` 
 
