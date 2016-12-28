@@ -2,8 +2,8 @@
 
 - SASS自定义UI模块：[MUI](./MUI)    
   - 自定义移动端[loading.js](./MUI/loading) 引入js文件即可  
-        - canvas
-        - svg
+        - canvas 版本
+        - svg 版本
 - web端弹出层：[jquery.alertBox](./jquery.alertBox)
 - 移动端弹出层：[m.alertBox](./m.alertBox)
 - 公用方法类Utils：[Utils](./Utils)
