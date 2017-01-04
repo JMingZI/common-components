@@ -1,4 +1,6 @@
-### 关于loading轮子
+### 关于loading轮子  
+
+![demo](loading/loading.png)  
 
 特性：
 + 单文件引入/import导入/拷贝
